@@ -1,0 +1,2958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --bg: #fff;
+            --card-bg: #f8f9fa;
+            --shadow: rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #34495e;
+            --dark: #ecf0f1;
+            --text: #ecf0f1;
+            --bg: #1a1a2e;
+            --card-bg: #16213e;
+            --shadow: rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-success {
+            background-color: #27ae60;
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .btn-warning {
+            background-color: #f39c12;
+        }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .sidebar {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 10px;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 12px 15px;
+            background-color: var(--light);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .content {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light);
+            border-radius: 5px;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .add-btn, .remove-btn {
+            padding: 8px 15px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .remove-btn {
+            background-color: var(--accent);
+        }
+
+        .remove-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .item-group {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .json-output {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .copy-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .success-message {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .error-message {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Image Upload Styles */
+        .image-upload-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .image-preview {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed var(--light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        .image-upload-controls {
+            flex: 1;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Enhanced Project Categories */
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.9rem;
+        }
+
+        .category-tag .remove-tag {
+            margin-left: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .data-management {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--light);
+            border-radius: 5px;
+        }
+
+        .data-management h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .data-management-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* AI Knowledge Base Styles */
+        .knowledge-base-container {
+            margin-top: 20px;
+        }
+
+        .kb-item {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .kb-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .kb-answer {
+            color: var(--text);
+        }
+
+        .kb-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .kb-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .kb-search {
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        /* AI Assistant Preview */
+        .ai-preview {
+            margin-top: 30px;
+            border-top: 1px solid var(--light);
+            padding-top: 20px;
+        }
+
+        .ai-preview-container {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .ai-message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .ai-user {
+            background-color: var(--secondary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .ai-bot {
+            background-color: var(--card-bg);
+            border: 1px solid var(--light);
+        }
+
+        .ai-input-area {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--light);
+            border-radius: 5px 0 0 5px;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .ai-send {
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            .image-upload-container {
+                flex-direction: column;
+            }
+            
+            .data-management-buttons {
+                flex-direction: column;
+            }
+            
+            .kb-actions {
+                flex-direction: column;
+            }
+            
+            .kb-search {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cogs"></i>
+                    <span>Portfolio Dashboard</span>
+                </div>
+                <div class="nav-buttons">
+                    <a href="index.html" class="btn btn-secondary">View Portfolio</a>
+                    <button class="btn btn-warning" id="importJson">Import JSON</button>
+                    <button class="btn btn-success" id="exportJson">Export JSON</button>
+                    <button class="btn" id="generateJson">Generate JSON</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="dashboard">
+            <div class="sidebar">
+                <h2>Dashboard</h2>
+                <ul class="nav-links">
+                    <li><a href="#data-management" class="active">Data Management</a></li>
+                    <li><a href="#basic-info">Basic Information</a></li>
+                    <li><a href="#about">About Section</a></li>
+                    <li><a href="#personal-details">Personal Details</a></li>
+                    <li><a href="#competencies">Key Competencies</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#awards">Awards</a></li>
+                    <li><a href="#qualifications">Qualifications</a></li>
+                    <li><a href="#research-activities">Research Activities</a></li>
+                    <li><a href="#activities-associations">Activities & Associations</a></li>
+                    <li><a href="#extracurricular">Extracurricular</a></li>
+                    <li><a href="#project-categories">Project Categories</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact & Social</a></li>
+                    <li><a href="#ai-knowledge-base">AI Knowledge Base</a></li>
+                    <li><a href="#json-output">JSON Output</a></li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <!-- Data Management Section -->
+                <div id="data-management" class="section active">
+                    <h2>Data Management</h2>
+                    <div class="data-management">
+                        <h3>Data Persistence</h3>
+                        <p>Your data is automatically saved to your browser's local storage. This means your information will persist between browser sessions.</p>
+                        <div class="data-management-buttons">
+                            <button class="btn btn-success" id="saveData">Save Data Now</button>
+                            <button class="btn btn-secondary" id="loadData">Reload Data</button>
+                            <button class="btn btn-warning" id="clearData">Clear All Data</button>
+                        </div>
+                    </div>
+                    <div class="data-management">
+                        <h3>Import/Export</h3>
+                        <p>You can import an existing JSON file to populate the dashboard, or export your current data as a JSON file.</p>
+                        <div class="data-management-buttons">
+                            <button class="btn btn-warning" id="importJson2">Import JSON File</button>
+                            <button class="btn btn-success" id="exportJson2">Export as JSON File</button>
+                        </div>
+                    </div>
+                    <div class="success-message" id="dataSuccess"></div>
+                </div>
+
+                <!-- Basic Information Section -->
+                <div id="basic-info" class="section">
+                    <h2>Basic Information</h2>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" value="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Professional Title</label>
+                        <input type="text" id="title" class="form-control" value="Senior Mechanical Engineer">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Professional Description</label>
+                        <textarea id="description" class="form-control">Innovative engineer with 8+ years of experience in mechanical design, product development, and project management. Passionate about creating efficient solutions for complex engineering challenges.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Profile Images</label>
+                        <div class="image-upload-container">
+                            <div class="image-preview" id="hero-preview">
+                                <i class="fas fa-user fa-3x"></i>
+                            </div>
+                            <div class="image-upload-controls">
+                                <label for="hero-image">Hero Image (Front)</label>
+                                <input type="file" id="hero-image" class="form-control" accept="image/*">
+                                <input type="text" id="hero-image-path" class="form-control" placeholder="Image path" style="margin-top: 10px;">
+                            </div>
+                        </div>
+                        <div class="image-upload-container" style="margin-top: 20px;">
+                            <div class="image-preview" id="about-preview">
+                                <i class="fas fa-user fa-3x"></i>
+                            </div>
+                            <div class="image-upload-controls">
+                                <label for="about-image">About Image (Back)</label>
+                                <input type="file" id="about-image" class="form-control" accept="image/*">
+                                <input type="text" id="about-image-path" class="form-control" placeholder="Image path" style="margin-top: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cv-link">CV Download Link</label>
+                        <input type="text" id="cv-link" class="form-control" value="documents/cv.pdf">
+                    </div>
+                </div>
+
+                <!-- About Section -->
+                <div id="about" class="section">
+                    <h2>About Section</h2>
+                    <div class="form-group">
+                        <label for="about-text">About Text</label>
+                        <textarea id="about-text" class="form-control">I am a dedicated mechanical engineer with expertise in CAD design, finite element analysis, and product development. My career has spanned across automotive, aerospace, and consumer products industries, where I've led multidisciplinary teams to deliver innovative solutions.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>About Details</label>
+                        <div id="about-details-container">
+                            <div class="item-group">
+                                <input type="text" class="form-control about-detail" value="Specialized in CAD/CAM systems including SolidWorks, CATIA, and AutoCAD">
+                                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                            </div>
+                            <div class="item-group">
+                                <input type="text" class="form-control about-detail" value="Experienced in finite element analysis (FEA) and computational fluid dynamics (CFD)">
+                                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                            </div>
+                            <div class="item-group">
+                                <input type="text" class="form-control about-detail" value="Proven track record in reducing production costs by 15-20% through design optimization">
+                                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                            </div>
+                            <div class="item-group">
+                                <input type="text" class="form-control about-detail" value="Strong background in materials science and manufacturing processes">
+                                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                            </div>
+                        </div>
+                        <button class="add-btn" onclick="addAboutDetail()">Add Detail</button>
+                    </div>
+                </div>
+
+                <!-- Personal Details Section -->
+                <div id="personal-details" class="section">
+                    <h2>Personal Details</h2>
+                    <div id="personal-details-container">
+                        <div class="item-group">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Label</label>
+                                    <input type="text" class="form-control personal-label" value="Birthday">
+                                </div>
+                                <div class="form-group">
+                                    <label>Value</label>
+                                    <input type="text" class="form-control personal-value" value="January 15, 1985">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Icon (Font Awesome class)</label>
+                                <input type="text" class="form-control personal-icon" value="fas fa-birthday-cake">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Label</label>
+                                    <input type="text" class="form-control personal-label" value="Address">
+                                </div>
+                                <div class="form-group">
+                                    <label>Value</label>
+                                    <input type="text" class="form-control personal-value" value="123 Engineering St, San Francisco, CA">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Icon (Font Awesome class)</label>
+                                <input type="text" class="form-control personal-icon" value="fas fa-map-marker-alt">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Label</label>
+                                    <input type="text" class="form-control personal-label" value="Phone">
+                                </div>
+                                <div class="form-group">
+                                    <label>Value</label>
+                                    <input type="text" class="form-control personal-value" value="+1 (555) 123-4567">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Icon (Font Awesome class)</label>
+                                <input type="text" class="form-control personal-icon" value="fas fa-phone">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Label</label>
+                                    <input type="text" class="form-control personal-label" value="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label>Value</label>
+                                    <input type="text" class="form-control personal-value" value="john.doe@example.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Icon (Font Awesome class)</label>
+                                <input type="text" class="form-control personal-icon" value="fas fa-envelope">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addPersonalDetail()">Add Personal Detail</button>
+                </div>
+
+                <!-- Key Competencies Section -->
+                <div id="competencies" class="section">
+                    <h2>Key Competencies</h2>
+                    <div id="competencies-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Competency Name</label>
+                                <input type="text" class="form-control competency-name" value="PLC Programming">
+                            </div>
+                            <div class="form-group">
+                                <label>Level (0-100)</label>
+                                <input type="number" class="form-control competency-level" value="95" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Competency Name</label>
+                                <input type="text" class="form-control competency-name" value="Industrial Automation">
+                            </div>
+                            <div class="form-group">
+                                <label>Level (0-100)</label>
+                                <input type="number" class="form-control competency-level" value="95" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Competency Name</label>
+                                <input type="text" class="form-control competency-name" value="Project Management">
+                            </div>
+                            <div class="form-group">
+                                <label>Level (0-100)</label>
+                                <input type="number" class="form-control competency-level" value="85" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Competency Name</label>
+                                <input type="text" class="form-control competency-name" value="Team Leadership">
+                            </div>
+                            <div class="form-group">
+                                <label>Level (0-100)</label>
+                                <input type="number" class="form-control competency-level" value="80" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addCompetency()">Add Competency</button>
+                </div>
+
+                <!-- Experience Section -->
+                <div id="experience" class="section">
+                    <h2>Work Experience</h2>
+                    <div id="experience-container">
+                        <div class="item-group">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Position</label>
+                                    <input type="text" class="form-control exp-position" value="Senior Mechanical Engineer">
+                                </div>
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" class="form-control exp-company" value="Aerospace Innovations Inc.">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control exp-date" value="2019 - Present">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control exp-description">Lead a team of engineers in designing and testing components for next-generation aircraft. Implemented new design methodologies that reduced development time by 25%.</textarea>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Position</label>
+                                    <input type="text" class="form-control exp-position" value="Mechanical Design Engineer">
+                                </div>
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" class="form-control exp-company" value="Global Automotive Systems">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control exp-date" value="2016 - 2019">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control exp-description">Designed and optimized automotive components using advanced CAD and simulation tools. Collaborated with cross-functional teams to improve product performance and manufacturability.</textarea>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addExperience()">Add Experience</button>
+                </div>
+
+                <!-- Skills Section -->
+                <div id="skills" class="section">
+                    <h2>Skills</h2>
+                    <div id="skills-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <input type="text" class="form-control skill-category" value="Engineering Software">
+                            </div>
+                            <div class="form-group">
+                                <label>Icon (Font Awesome class)</label>
+                                <input type="text" class="form-control skill-icon" value="fas fa-laptop-code">
+                            </div>
+                            <div class="form-group">
+                                <label>Skills</label>
+                                <div class="skills-list">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control skill-name" value="SolidWorks" placeholder="Skill Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control skill-level" value="95" placeholder="Skill Level (0-100)">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control skill-name" value="CATIA" placeholder="Skill Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control skill-level" value="90" placeholder="Skill Level (0-100)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="add-btn" onclick="addSkillItem(this)">Add Skill</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove Category</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addSkillCategory()">Add Skill Category</button>
+                </div>
+
+                <!-- Education Section -->
+                <div id="education" class="section">
+                    <h2>Education</h2>
+                    <div id="education-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Degree</label>
+                                <input type="text" class="form-control edu-degree" value="Master of Science in Mechanical Engineering">
+                            </div>
+                            <div class="form-group">
+                                <label>Institution</label>
+                                <input type="text" class="form-control edu-institution" value="Stanford University">
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control edu-date" value="2012 - 2014">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control edu-description">Specialized in advanced materials and computational mechanics. Thesis on 'Optimization of Composite Materials for Aerospace Applications'.</textarea>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addEducation()">Add Education</button>
+                </div>
+
+                <!-- Publications Section -->
+                <div id="publications" class="section">
+                    <h2>Publications</h2>
+                    <div id="publications-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control pub-title" value="Advanced Composite Materials in Modern Aerospace Design">
+                            </div>
+                            <div class="form-group">
+                                <label>Publisher</label>
+                                <input type="text" class="form-control pub-publisher" value="Journal of Aerospace Engineering">
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control pub-date" value="2021">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control pub-description">Co-authored research paper exploring the application of novel composite materials in reducing aircraft weight while maintaining structural integrity.</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Publication Link</label>
+                                <input type="text" class="form-control pub-link" placeholder="https://example.com/publication" value="https://doi.org/10.1234/jae.2021.001">
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addPublication()">Add Publication</button>
+                </div>
+
+                <!-- Awards Section -->
+                <div id="awards" class="section">
+                    <h2>Awards</h2>
+                    <div id="awards-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control award-title" value="Excellence in Engineering Innovation Award">
+                            </div>
+                            <div class="form-group">
+                                <label>Organization</label>
+                                <input type="text" class="form-control award-organization" value="American Society of Mechanical Engineers">
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control award-date" value="2020">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control award-description">Recognized for developing a novel cooling system that improved thermal efficiency by 30% in high-performance applications.</textarea>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addAward()">Add Award</button>
+                </div>
+
+                <!-- Qualifications Section -->
+                <div id="qualifications" class="section">
+                    <h2>Professional Qualifications</h2>
+                    <div id="qualifications-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control qual-title" value="Professional Engineer (PE) License">
+                            </div>
+                            <div class="form-group">
+                                <label>Issuer</label>
+                                <input type="text" class="form-control qual-issuer" value="National Council of Examiners for Engineering and Surveying">
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control qual-date" value="2017">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control qual-description">Licensed Professional Engineer with demonstrated competency in mechanical engineering principles and practices.</textarea>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addQualification()">Add Qualification</button>
+                </div>
+
+                <!-- Research Activities Section -->
+                <div id="research-activities" class="section">
+                    <h2>Research Activities</h2>
+                    <div id="research-activities-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control research-title" value="Advanced Materials for High-Temperature Applications">
+                            </div>
+                            <div class="form-group">
+                                <label>Institution/Organization</label>
+                                <input type="text" class="form-control research-institution" value="Stanford University Research Lab">
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control research-date" value="2018 - 2020">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control research-description">Conducted research on novel composite materials capable of withstanding extreme temperatures for aerospace applications. Developed testing protocols and analyzed material performance under various conditions.</textarea>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addResearchActivity()">Add Research Activity</button>
+                </div>
+
+                <!-- Activities & Associations Section -->
+                <div id="activities-associations" class="section">
+                    <h2>Activities & Associations</h2>
+                    <div id="activities-associations-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control activity-title" value="Member, American Society of Mechanical Engineers">
+                            </div>
+                            <div class="form-group">
+                                <label>Organization</label>
+                                <input type="text" class="form-control activity-organization" value="ASME">
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control activity-date" value="2015 - Present">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control activity-description">Active member participating in conferences, workshops, and technical committees focused on advancing mechanical engineering practices and standards.</textarea>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addActivityAssociation()">Add Activity/Association</button>
+                </div>
+
+                <!-- Extracurricular Section -->
+                <div id="extracurricular" class="section">
+                    <h2>Extracurricular Activities</h2>
+                    <div id="extracurricular-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control extracurricular-title" value="Volunteer, STEM Education Outreach">
+                            </div>
+                            <div class="form-group">
+                                <label>Organization</label>
+                                <input type="text" class="form-control extracurricular-organization" value="Local High Schools">
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" class="form-control extracurricular-date" value="2017 - Present">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control extracurricular-description">Volunteer as a mentor and guest lecturer for STEM programs at local high schools, inspiring the next generation of engineers and scientists.</textarea>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addExtracurricular()">Add Extracurricular Activity</button>
+                </div>
+
+                <!-- Project Categories Section -->
+                <div id="project-categories" class="section">
+                    <h2>Project Categories</h2>
+                    <div id="project-categories-container">
+                        <div class="item-group">
+                            <input type="text" class="form-control project-category" value="Automation">
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <input type="text" class="form-control project-category" value="SCADA System">
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <input type="text" class="form-control project-category" value="Control Panels">
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                        <div class="item-group">
+                            <input type="text" class="form-control project-category" value="Industrial Design">
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addProjectCategory()">Add Category</button>
+                </div>
+
+                <!-- Projects Section -->
+                <div id="projects" class="section">
+                    <h2>Projects</h2>
+                    <div id="projects-container">
+                        <div class="item-group">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control project-title" value="High-Efficiency Turbine Blade Design">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control project-description">Led the redesign of turbine blades for improved aerodynamic efficiency, resulting in 12% increase in power output.</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Full Description</label>
+                                <textarea class="form-control project-full-description">This project involved extensive computational fluid dynamics analysis and wind tunnel testing to optimize the aerodynamic profile of turbine blades. The new design reduced drag by 15% while maintaining structural integrity under extreme conditions. The implementation of these blades in our flagship product line resulted in a measurable increase in energy generation efficiency.</textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="form-control project-category-select">
+                                        <option value="Automation">Automation</option>
+                                        <option value="SCADA System">SCADA System</option>
+                                        <option value="Control Panels">Control Panels</option>
+                                        <option value="Industrial Design" selected>Industrial Design</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control project-status">
+                                        <option value="Completed" selected>Completed</option>
+                                        <option value="Ongoing">Ongoing</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Image Path</label>
+                                <input type="text" class="form-control project-image" value="images/project1.jpg">
+                            </div>
+                            <div class="form-group">
+                                <label>YouTube Video Link</label>
+                                <input type="text" class="form-control project-youtube" placeholder="https://www.youtube.com/watch?v=...">
+                            </div>
+                            <div class="form-group">
+                                <label>Tags (comma separated)</label>
+                                <input type="text" class="form-control project-tags" value="Aerodynamics, CFD, CAD, Thermal Analysis">
+                            </div>
+                            <div class="form-group">
+                                <label>Technologies (comma separated)</label>
+                                <input type="text" class="form-control project-technologies" value="SolidWorks, ANSYS, MATLAB, Python">
+                            </div>
+                            <div class="form-group">
+                                <label>Features (one per line)</label>
+                                <textarea class="form-control project-features">Improved aerodynamic efficiency by 12%
+Reduced manufacturing costs by 8%
+Enhanced structural durability
+Implemented advanced cooling system</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Icon (Font Awesome class)</label>
+                                <input type="text" class="form-control project-icon" value="fas fa-fan">
+                            </div>
+                            <div class="form-group">
+                                <label>Project Links</label>
+                                <div class="project-links-list">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control project-link-text" value="Live Demo" placeholder="Link Text">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control project-link-url" value="https://example.com/demo" placeholder="URL">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control project-link-icon" value="fas fa-external-link-alt" placeholder="Icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="add-btn" onclick="addProjectLink(this)">Add Link</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addProject()">Add Project</button>
+                </div>
+
+                <!-- Contact & Social Section -->
+                <div id="contact" class="section">
+                    <h2>Contact & Social Links</h2>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="contact-email" class="form-control" value="john.doe@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="contact-phone" class="form-control" value="+1 (555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="contact-location" class="form-control" value="San Francisco, CA">
+                    </div>
+                    <div class="form-group">
+                        <label>Social Links</label>
+                        <div id="social-container">
+                            <div class="item-group">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Platform</label>
+                                        <input type="text" class="form-control social-platform" value="LinkedIn">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>URL</label>
+                                        <input type="text" class="form-control social-url" value="https://linkedin.com/in/johndoe">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Icon (Font Awesome class)</label>
+                                    <input type="text" class="form-control social-icon" value="fab fa-linkedin-in">
+                                </div>
+                                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                            </div>
+                        </div>
+                        <button class="add-btn" onclick="addSocial()">Add Social Link</button>
+                    </div>
+                </div>
+
+                <!-- AI Knowledge Base Section -->
+                <div id="ai-knowledge-base" class="section">
+                    <h2>AI Assistant Knowledge Base</h2>
+                    <p>Create questions and answers for the AI assistant on your portfolio site. This will help visitors get quick answers about your background and experience.</p>
+                    
+                    <div class="kb-actions">
+                        <div class="kb-search">
+                            <input type="text" id="kb-search" class="form-control" placeholder="Search questions or answers...">
+                        </div>
+                        <button class="btn btn-info" id="add-kb-item">Add Q&A</button>
+                    </div>
+                    
+                    <div class="knowledge-base-container" id="kb-container">
+                        <div class="kb-item">
+                            <div class="kb-question">What is your educational background?</div>
+                            <div class="kb-answer">I hold a Master of Science in Mechanical Engineering from Stanford University, where I specialized in advanced materials and computational mechanics.</div>
+                            <div class="kb-controls">
+                                <button class="btn btn-secondary edit-kb">Edit</button>
+                                <button class="btn btn-warning remove-kb">Remove</button>
+                            </div>
+                        </div>
+                        <div class="kb-item">
+                            <div class="kb-question">What industries have you worked in?</div>
+                            <div class="kb-answer">Throughout my career, I've worked across automotive, aerospace, and consumer products industries, gaining diverse experience in mechanical design and product development.</div>
+                            <div class="kb-controls">
+                                <button class="btn btn-secondary edit-kb">Edit</button>
+                                <button class="btn btn-warning remove-kb">Remove</button>
+                            </div>
+                        </div>
+                        <div class="kb-item">
+                            <div class="kb-question">What CAD software are you proficient with?</div>
+                            <div class="kb-answer">I'm highly proficient with SolidWorks, CATIA, and AutoCAD, with over 8 years of experience using these tools for complex mechanical design projects.</div>
+                            <div class="kb-controls">
+                                <button class="btn btn-secondary edit-kb">Edit</button>
+                                <button class="btn btn-warning remove-kb">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-preview">
+                        <h3>AI Assistant Preview</h3>
+                        <p>Test how the AI assistant will respond to questions:</p>
+                        <div class="ai-preview-container" id="ai-preview">
+                            <div class="ai-message ai-bot">
+                                Hello! I'm an AI assistant for John Doe. How can I help you learn more about his background and experience?
+                            </div>
+                        </div>
+                        <div class="ai-input-area">
+                            <input type="text" class="ai-input" id="ai-test-input" placeholder="Ask a question...">
+                            <button class="ai-send" id="ai-test-send">Send</button>
+                        </div>
+                    </div>
+                    
+                    <div class="data-management" style="margin-top: 30px;">
+                        <h3>Knowledge Base Management</h3>
+                        <p>Export your knowledge base to use with the AI assistant on your portfolio site.</p>
+                        <div class="data-management-buttons">
+                            <button class="btn btn-success" id="export-kb">Export Knowledge Base</button>
+                            <button class="btn btn-warning" id="import-kb">Import Knowledge Base</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JSON Output Section -->
+                <div id="json-output" class="section">
+                    <h2>JSON Output</h2>
+                    <p>Click "Generate JSON" to create the data.json code based on your inputs.</p>
+                    <div class="json-output" id="jsonCode"></div>
+                    <button class="copy-btn" id="copyJson">Copy to Clipboard</button>
+                    <div class="success-message" id="copySuccess">JSON copied to clipboard!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Save data to localStorage
+        function saveData() {
+            const data = collectFormData();
+            localStorage.setItem('portfolioData', JSON.stringify(data));
+            showMessage('Data saved successfully!', 'success');
+        }
+
+        // Load data from localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('portfolioData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                populateForm(data);
+                showMessage('Data loaded successfully!', 'success');
+            } else {
+                showMessage('No saved data found.', 'warning');
+            }
+        }
+
+        // Clear all data
+        function clearData() {
+            if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+                localStorage.removeItem('portfolioData');
+                location.reload();
+            }
+        }
+
+        // Export data as JSON file
+        function exportData() {
+            const data = collectFormData();
+            const jsonString = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'portfolio-data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showMessage('Data exported successfully!', 'success');
+        }
+
+        // Import data from JSON file
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    populateForm(data);
+                    saveData();
+                    showMessage('Data imported successfully!', 'success');
+                } catch (error) {
+                    showMessage('Error importing data: Invalid JSON format', 'error');
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset the file input
+            event.target.value = '';
+        }
+
+        // Show message
+        function showMessage(message, type) {
+            const messageElement = document.getElementById('dataSuccess');
+            messageElement.textContent = message;
+            messageElement.className = type === 'success' ? 'success-message' : 'error-message';
+            messageElement.style.display = 'block';
+            
+            setTimeout(() => {
+                messageElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Collect all form data
+        function collectFormData() {
+            // Basic info
+            const name = document.getElementById('name').value;
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const heroImage = document.getElementById('hero-image-path').value;
+            const aboutImage = document.getElementById('about-image-path').value;
+            const cvLink = document.getElementById('cv-link').value;
+            
+            // About
+            const aboutText = document.getElementById('about-text').value;
+            const aboutDetails = Array.from(document.querySelectorAll('.about-detail'))
+                .map(input => input.value)
+                .filter(value => value.trim() !== '');
+            
+            // Personal Details
+            const personalDetails = Array.from(document.querySelectorAll('#personal-details-container .item-group')).map(item => ({
+                label: item.querySelector('.personal-label').value,
+                value: item.querySelector('.personal-value').value,
+                icon: item.querySelector('.personal-icon').value
+            })).filter(detail => detail.label.trim() !== '');
+            
+            // Competencies
+            const competencies = Array.from(document.querySelectorAll('#competencies-container .item-group')).map(item => ({
+                name: item.querySelector('.competency-name').value,
+                level: item.querySelector('.competency-level').value
+            })).filter(competency => competency.name.trim() !== '');
+            
+            // Experience
+            const experience = Array.from(document.querySelectorAll('#experience-container .item-group')).map(item => ({
+                position: item.querySelector('.exp-position').value,
+                company: item.querySelector('.exp-company').value,
+                date: item.querySelector('.exp-date').value,
+                description: item.querySelector('.exp-description').value
+            }));
+            
+            // Skills
+            const skills = Array.from(document.querySelectorAll('#skills-container .item-group')).map(category => ({
+                category: category.querySelector('.skill-category').value,
+                icon: category.querySelector('.skill-icon').value,
+                items: Array.from(category.querySelectorAll('.skills-list .form-row')).map(row => ({
+                    name: row.querySelector('.skill-name').value,
+                    level: row.querySelector('.skill-level').value
+                })).filter(skill => skill.name.trim() !== '')
+            })).filter(category => category.category.trim() !== '');
+            
+            // Education
+            const education = Array.from(document.querySelectorAll('#education-container .item-group')).map(item => ({
+                degree: item.querySelector('.edu-degree').value,
+                institution: item.querySelector('.edu-institution').value,
+                date: item.querySelector('.edu-date').value,
+                description: item.querySelector('.edu-description').value
+            }));
+            
+            // Publications
+            const publications = Array.from(document.querySelectorAll('#publications-container .item-group')).map(item => ({
+                title: item.querySelector('.pub-title').value,
+                publisher: item.querySelector('.pub-publisher').value,
+                date: item.querySelector('.pub-date').value,
+                description: item.querySelector('.pub-description').value,
+                link: item.querySelector('.pub-link') ? item.querySelector('.pub-link').value : ''
+            }));
+            
+            // Awards
+            const awards = Array.from(document.querySelectorAll('#awards-container .item-group')).map(item => ({
+                title: item.querySelector('.award-title').value,
+                organization: item.querySelector('.award-organization').value,
+                date: item.querySelector('.award-date').value,
+                description: item.querySelector('.award-description').value
+            }));
+            
+            // Qualifications
+            const qualifications = Array.from(document.querySelectorAll('#qualifications-container .item-group')).map(item => ({
+                title: item.querySelector('.qual-title').value,
+                issuer: item.querySelector('.qual-issuer').value,
+                date: item.querySelector('.qual-date').value,
+                description: item.querySelector('.qual-description').value
+            }));
+            
+            // Research Activities
+            const researchActivities = Array.from(document.querySelectorAll('#research-activities-container .item-group')).map(item => ({
+                title: item.querySelector('.research-title').value,
+                institution: item.querySelector('.research-institution').value,
+                date: item.querySelector('.research-date').value,
+                description: item.querySelector('.research-description').value
+            }));
+            
+            // Activities & Associations
+            const activitiesAssociations = Array.from(document.querySelectorAll('#activities-associations-container .item-group')).map(item => ({
+                title: item.querySelector('.activity-title').value,
+                organization: item.querySelector('.activity-organization').value,
+                date: item.querySelector('.activity-date').value,
+                description: item.querySelector('.activity-description').value
+            }));
+            
+            // Extracurricular
+            const extracurricular = Array.from(document.querySelectorAll('#extracurricular-container .item-group')).map(item => ({
+                title: item.querySelector('.extracurricular-title').value,
+                organization: item.querySelector('.extracurricular-organization').value,
+                date: item.querySelector('.extracurricular-date').value,
+                description: item.querySelector('.extracurricular-description').value
+            }));
+            
+            // Project Categories
+            const projectCategories = ['all'].concat(Array.from(document.querySelectorAll('#project-categories-container .project-category'))
+                .map(input => input.value)
+                .filter(value => value.trim() !== ''));
+            
+            // Projects
+            const projects = Array.from(document.querySelectorAll('#projects-container .item-group')).map((item, index) => {
+                const links = Array.from(item.querySelectorAll('.project-links-list .form-row')).map(row => ({
+                    text: row.querySelector('.project-link-text').value,
+                    url: row.querySelector('.project-link-url').value,
+                    icon: row.querySelector('.project-link-icon').value
+                })).filter(link => link.text.trim() !== '');
+                
+                const features = item.querySelector('.project-features').value
+                    .split('\n')
+                    .map(f => f.trim())
+                    .filter(f => f !== '');
+                
+                return {
+                    id: index + 1,
+                    title: item.querySelector('.project-title').value,
+                    description: item.querySelector('.project-description').value,
+                    fullDescription: item.querySelector('.project-full-description').value,
+                    category: item.querySelector('.project-category-select').value,
+                    status: item.querySelector('.project-status').value,
+                    image: item.querySelector('.project-image').value,
+                    youtubeLink: item.querySelector('.project-youtube').value,
+                    tags: item.querySelector('.project-tags').value.split(',').map(tag => tag.trim()),
+                    technologies: item.querySelector('.project-technologies').value.split(',').map(tech => tech.trim()),
+                    features: features,
+                    icon: item.querySelector('.project-icon').value,
+                    links: links
+                };
+            });
+            
+            // Contact
+            const contact = {
+                email: document.getElementById('contact-email').value,
+                phone: document.getElementById('contact-phone').value,
+                location: document.getElementById('contact-location').value
+            };
+            
+            // Social
+            const social = Array.from(document.querySelectorAll('#social-container .item-group')).map(item => ({
+                platform: item.querySelector('.social-platform').value,
+                url: item.querySelector('.social-url').value,
+                icon: item.querySelector('.social-icon').value
+            }));
+            
+            // Knowledge Base
+            const knowledgeBase = Array.from(document.querySelectorAll('#kb-container .kb-item')).map(item => ({
+                question: item.querySelector('.kb-question').textContent,
+                answer: item.querySelector('.kb-answer').textContent
+            }));
+            
+            // Construct JSON object
+            return {
+                name,
+                title,
+                description,
+                heroImage,
+                aboutImage,
+                cvLink,
+                about: {
+                    text: aboutText,
+                    details: aboutDetails
+                },
+                personalDetails,
+                competencies,
+                experience,
+                skills,
+                education,
+                publications,
+                awards,
+                qualifications,
+                researchActivities,
+                activitiesAssociations,
+                extracurricular,
+                projectCategories,
+                projects,
+                contact,
+                social,
+                knowledgeBase
+            };
+        }
+
+        // Populate form with saved data
+        function populateForm(data) {
+            // Basic info
+            document.getElementById('name').value = data.name || '';
+            document.getElementById('title').value = data.title || '';
+            document.getElementById('description').value = data.description || '';
+            document.getElementById('hero-image-path').value = data.heroImage || '';
+            document.getElementById('about-image-path').value = data.aboutImage || '';
+            document.getElementById('cv-link').value = data.cvLink || '';
+            
+            // Update image previews
+            updateImagePreview('hero-preview', data.heroImage);
+            updateImagePreview('about-preview', data.aboutImage);
+            
+            // About
+            document.getElementById('about-text').value = data.about?.text || '';
+            
+            // Clear existing about details
+            const aboutDetailsContainer = document.getElementById('about-details-container');
+            aboutDetailsContainer.innerHTML = '';
+            
+            // Add saved about details
+            if (data.about?.details) {
+                data.about.details.forEach(detail => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <input type="text" class="form-control about-detail" value="${detail}">
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    aboutDetailsContainer.appendChild(newItem);
+                });
+            }
+            
+            // Personal Details
+            const personalDetailsContainer = document.getElementById('personal-details-container');
+            personalDetailsContainer.innerHTML = '';
+            
+            if (data.personalDetails) {
+                data.personalDetails.forEach(detail => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Label</label>
+                                <input type="text" class="form-control personal-label" value="${detail.label || ''}">
+                            </div>
+                            <div class="form-group">
+                                <label>Value</label>
+                                <input type="text" class="form-control personal-value" value="${detail.value || ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Font Awesome class)</label>
+                            <input type="text" class="form-control personal-icon" value="${detail.icon || ''}">
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    personalDetailsContainer.appendChild(newItem);
+                });
+            }
+            
+            // Competencies
+            const competenciesContainer = document.getElementById('competencies-container');
+            competenciesContainer.innerHTML = '';
+            
+            if (data.competencies) {
+                data.competencies.forEach(competency => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Competency Name</label>
+                            <input type="text" class="form-control competency-name" value="${competency.name || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Level (0-100)</label>
+                            <input type="number" class="form-control competency-level" value="${competency.level || ''}" min="0" max="100">
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    competenciesContainer.appendChild(newItem);
+                });
+            }
+            
+            // Experience
+            const experienceContainer = document.getElementById('experience-container');
+            experienceContainer.innerHTML = '';
+            
+            if (data.experience) {
+                data.experience.forEach(exp => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Position</label>
+                                <input type="text" class="form-control exp-position" value="${exp.position || ''}">
+                            </div>
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" class="form-control exp-company" value="${exp.company || ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control exp-date" value="${exp.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control exp-description">${exp.description || ''}</textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    experienceContainer.appendChild(newItem);
+                });
+            }
+            
+            // Skills
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = '';
+            
+            if (data.skills) {
+                data.skills.forEach(skillCategory => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" class="form-control skill-category" value="${skillCategory.category || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Font Awesome class)</label>
+                            <input type="text" class="form-control skill-icon" value="${skillCategory.icon || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Skills</label>
+                            <div class="skills-list">
+                                ${skillCategory.items ? skillCategory.items.map(skill => `
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control skill-name" value="${skill.name || ''}" placeholder="Skill Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control skill-level" value="${skill.level || ''}" placeholder="Skill Level (0-100)">
+                                        </div>
+                                    </div>
+                                `).join('') : ''}
+                            </div>
+                            <button class="add-btn" onclick="addSkillItem(this)">Add Skill</button>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove Category</button>
+                    `;
+                    skillsContainer.appendChild(newItem);
+                });
+            }
+            
+            // Education
+            const educationContainer = document.getElementById('education-container');
+            educationContainer.innerHTML = '';
+            
+            if (data.education) {
+                data.education.forEach(edu => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Degree</label>
+                            <input type="text" class="form-control edu-degree" value="${edu.degree || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Institution</label>
+                            <input type="text" class="form-control edu-institution" value="${edu.institution || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control edu-date" value="${edu.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control edu-description">${edu.description || ''}</textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    educationContainer.appendChild(newItem);
+                });
+            }
+            
+            // Publications
+            const publicationsContainer = document.getElementById('publications-container');
+            publicationsContainer.innerHTML = '';
+            
+            if (data.publications) {
+                data.publications.forEach(pub => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control pub-title" value="${pub.title || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Publisher</label>
+                            <input type="text" class="form-control pub-publisher" value="${pub.publisher || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control pub-date" value="${pub.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control pub-description">${pub.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Publication Link</label>
+                            <input type="text" class="form-control pub-link" placeholder="https://example.com/publication" value="${pub.link || ''}">
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    publicationsContainer.appendChild(newItem);
+                });
+            }
+            
+            // Awards
+            const awardsContainer = document.getElementById('awards-container');
+            awardsContainer.innerHTML = '';
+            
+            if (data.awards) {
+                data.awards.forEach(award => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control award-title" value="${award.title || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Organization</label>
+                            <input type="text" class="form-control award-organization" value="${award.organization || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control award-date" value="${award.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control award-description">${award.description || ''}</textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    awardsContainer.appendChild(newItem);
+                });
+            }
+            
+            // Qualifications
+            const qualificationsContainer = document.getElementById('qualifications-container');
+            qualificationsContainer.innerHTML = '';
+            
+            if (data.qualifications) {
+                data.qualifications.forEach(qual => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control qual-title" value="${qual.title || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Issuer</label>
+                            <input type="text" class="form-control qual-issuer" value="${qual.issuer || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control qual-date" value="${qual.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control qual-description">${qual.description || ''}</textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    qualificationsContainer.appendChild(newItem);
+                });
+            }
+            
+            // Research Activities
+            const researchActivitiesContainer = document.getElementById('research-activities-container');
+            researchActivitiesContainer.innerHTML = '';
+            
+            if (data.researchActivities) {
+                data.researchActivities.forEach(research => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control research-title" value="${research.title || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Institution/Organization</label>
+                            <input type="text" class="form-control research-institution" value="${research.institution || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control research-date" value="${research.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control research-description">${research.description || ''}</textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    researchActivitiesContainer.appendChild(newItem);
+                });
+            }
+            
+            // Activities & Associations
+            const activitiesAssociationsContainer = document.getElementById('activities-associations-container');
+            activitiesAssociationsContainer.innerHTML = '';
+            
+            if (data.activitiesAssociations) {
+                data.activitiesAssociations.forEach(activity => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control activity-title" value="${activity.title || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Organization</label>
+                            <input type="text" class="form-control activity-organization" value="${activity.organization || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control activity-date" value="${activity.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control activity-description">${activity.description || ''}</textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    activitiesAssociationsContainer.appendChild(newItem);
+                });
+            }
+            
+            // Extracurricular
+            const extracurricularContainer = document.getElementById('extracurricular-container');
+            extracurricularContainer.innerHTML = '';
+            
+            if (data.extracurricular) {
+                data.extracurricular.forEach(extra => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control extracurricular-title" value="${extra.title || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Organization</label>
+                            <input type="text" class="form-control extracurricular-organization" value="${extra.organization || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control extracurricular-date" value="${extra.date || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control extracurricular-description">${extra.description || ''}</textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    extracurricularContainer.appendChild(newItem);
+                });
+            }
+            
+            // Project Categories
+            const projectCategoriesContainer = document.getElementById('project-categories-container');
+            projectCategoriesContainer.innerHTML = '';
+            
+            if (data.projectCategories && data.projectCategories.length > 1) {
+                data.projectCategories.forEach(category => {
+                    if (category !== 'all') {
+                        const newItem = document.createElement('div');
+                        newItem.classList.add('item-group');
+                        newItem.innerHTML = `
+                            <input type="text" class="form-control project-category" value="${category}">
+                            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                        `;
+                        projectCategoriesContainer.appendChild(newItem);
+                    }
+                });
+            }
+            
+            // Projects
+            const projectsContainer = document.getElementById('projects-container');
+            projectsContainer.innerHTML = '';
+            
+            if (data.projects) {
+                data.projects.forEach(project => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    
+                    let projectCategoriesHTML = '';
+                    if (data.projectCategories && data.projectCategories.length > 1) {
+                        data.projectCategories.forEach(category => {
+                            if (category !== 'all') {
+                                const selected = category === project.category ? 'selected' : '';
+                                projectCategoriesHTML += `<option value="${category}" ${selected}>${category}</option>`;
+                            }
+                        });
+                    }
+                    
+                    let linksHTML = '';
+                    if (project.links) {
+                        project.links.forEach(link => {
+                            linksHTML += `
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control project-link-text" value="${link.text || ''}" placeholder="Link Text">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control project-link-url" value="${link.url || ''}" placeholder="URL">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control project-link-icon" value="${link.icon || ''}" placeholder="Icon">
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    newItem.innerHTML = `
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control project-title" value="${project.title || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control project-description">${project.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Description</label>
+                            <textarea class="form-control project-full-description">${project.fullDescription || ''}</textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select class="form-control project-category-select">
+                                    ${projectCategoriesHTML}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control project-status">
+                                    <option value="Completed" ${project.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                    <option value="Ongoing" ${project.status === 'Ongoing' ? 'selected' : ''}>Ongoing</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Image Path</label>
+                            <input type="text" class="form-control project-image" value="${project.image || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>YouTube Video Link</label>
+                            <input type="text" class="form-control project-youtube" value="${project.youtubeLink || ''}" placeholder="https://www.youtube.com/watch?v=...">
+                        </div>
+                        <div class="form-group">
+                            <label>Tags (comma separated)</label>
+                            <input type="text" class="form-control project-tags" value="${project.tags ? project.tags.join(', ') : ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Technologies (comma separated)</label>
+                            <input type="text" class="form-control project-technologies" value="${project.technologies ? project.technologies.join(', ') : ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Features (one per line)</label>
+                            <textarea class="form-control project-features">${project.features ? project.features.join('\n') : ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Font Awesome class)</label>
+                            <input type="text" class="form-control project-icon" value="${project.icon || ''}">
+                        </div>
+                        <div class="form-group">
+                            <label>Project Links</label>
+                            <div class="project-links-list">
+                                ${linksHTML}
+                            </div>
+                            <button class="add-btn" onclick="addProjectLink(this)">Add Link</button>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    projectsContainer.appendChild(newItem);
+                });
+            }
+            
+            // Contact
+            document.getElementById('contact-email').value = data.contact?.email || '';
+            document.getElementById('contact-phone').value = data.contact?.phone || '';
+            document.getElementById('contact-location').value = data.contact?.location || '';
+            
+            // Social
+            const socialContainer = document.getElementById('social-container');
+            socialContainer.innerHTML = '';
+            
+            if (data.social) {
+                data.social.forEach(socialItem => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('item-group');
+                    newItem.innerHTML = `
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Platform</label>
+                                <input type="text" class="form-control social-platform" value="${socialItem.platform || ''}">
+                            </div>
+                            <div class="form-group">
+                                <label>URL</label>
+                                <input type="text" class="form-control social-url" value="${socialItem.url || ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Font Awesome class)</label>
+                            <input type="text" class="form-control social-icon" value="${socialItem.icon || ''}">
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+                    `;
+                    socialContainer.appendChild(newItem);
+                });
+            }
+            
+            // Knowledge Base
+            const kbContainer = document.getElementById('kb-container');
+            kbContainer.innerHTML = '';
+            
+            if (data.knowledgeBase) {
+                data.knowledgeBase.forEach(kbItem => {
+                    const newItem = document.createElement('div');
+                    newItem.classList.add('kb-item');
+                    newItem.innerHTML = `
+                        <div class="kb-question">${kbItem.question}</div>
+                        <div class="kb-answer">${kbItem.answer}</div>
+                        <div class="kb-controls">
+                            <button class="btn btn-secondary edit-kb">Edit</button>
+                            <button class="btn btn-warning remove-kb">Remove</button>
+                        </div>
+                    `;
+                    kbContainer.appendChild(newItem);
+                });
+            }
+            
+            // Set up event listeners for KB items
+            setupKnowledgeBaseEvents();
+        }
+
+        // Update image preview
+        function updateImagePreview(previewId, imagePath) {
+            const preview = document.getElementById(previewId);
+            if (imagePath) {
+                preview.innerHTML = `<img src="${imagePath}" alt="Preview">`;
+            } else {
+                preview.innerHTML = `<i class="fas fa-user fa-3x"></i>`;
+            }
+        }
+
+        // Navigation between sections
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links and sections
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked link and corresponding section
+                this.classList.add('active');
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // Remove item from form
+        function removeItem(button) {
+            button.parentElement.remove();
+            saveData(); // Save after removal
+        }
+
+        // Add about detail
+        function addAboutDetail() {
+            const container = document.getElementById('about-details-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <input type="text" class="form-control about-detail" placeholder="Enter detail">
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add personal detail
+        function addPersonalDetail() {
+            const container = document.getElementById('personal-details-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Label</label>
+                        <input type="text" class="form-control personal-label" placeholder="Label">
+                    </div>
+                    <div class="form-group">
+                        <label>Value</label>
+                        <input type="text" class="form-control personal-value" placeholder="Value">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Icon (Font Awesome class)</label>
+                    <input type="text" class="form-control personal-icon" placeholder="fas fa-icon">
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add competency
+        function addCompetency() {
+            const container = document.getElementById('competencies-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Competency Name</label>
+                    <input type="text" class="form-control competency-name" placeholder="Competency Name">
+                </div>
+                <div class="form-group">
+                    <label>Level (0-100)</label>
+                    <input type="number" class="form-control competency-level" placeholder="Level" min="0" max="100">
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add experience
+        function addExperience() {
+            const container = document.getElementById('experience-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text" class="form-control exp-position" placeholder="Position">
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" class="form-control exp-company" placeholder="Company">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" class="form-control exp-date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control exp-description" placeholder="Description"></textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add skill category
+        function addSkillCategory() {
+            const container = document.getElementById('skills-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" class="form-control skill-category" placeholder="Category">
+                </div>
+                <div class="form-group">
+                    <label>Icon (Font Awesome class)</label>
+                    <input type="text" class="form-control skill-icon" placeholder="fas fa-icon">
+                </div>
+                <div class="form-group">
+                    <label>Skills</label>
+                    <div class="skills-list">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" class="form-control skill-name" placeholder="Skill Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control skill-level" placeholder="Skill Level (0-100)">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addSkillItem(this)">Add Skill</button>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove Category</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add skill item
+        function addSkillItem(button) {
+            const skillsList = button.previousElementSibling;
+            const newSkill = document.createElement('div');
+            newSkill.classList.add('form-row');
+            newSkill.innerHTML = `
+                <div class="form-group">
+                    <input type="text" class="form-control skill-name" placeholder="Skill Name">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control skill-level" placeholder="Skill Level (0-100)">
+                </div>
+            `;
+            skillsList.appendChild(newSkill);
+            saveData(); // Save after adding
+        }
+
+        // Add education
+        function addEducation() {
+            const container = document.getElementById('education-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Degree</label>
+                    <input type="text" class="form-control edu-degree" placeholder="Degree">
+                </div>
+                <div class="form-group">
+                    <label>Institution</label>
+                    <input type="text" class="form-control edu-institution" placeholder="Institution">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" class="form-control edu-date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control edu-description" placeholder="Description"></textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add publication
+        function addPublication() {
+            const container = document.getElementById('publications-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control pub-title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label>Publisher</label>
+                    <input type="text" class="form-control pub-publisher" placeholder="Publisher">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" class="form-control pub-date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control pub-description" placeholder="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Publication Link</label>
+                    <input type="text" class="form-control pub-link" placeholder="https://example.com/publication">
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add award
+        function addAward() {
+            const container = document.getElementById('awards-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control award-title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label>Organization</label>
+                    <input type="text" class="form-control award-organization" placeholder="Organization">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" class="form-control award-date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control award-description" placeholder="Description"></textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add qualification
+        function addQualification() {
+            const container = document.getElementById('qualifications-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control qual-title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label>Issuer</label>
+                    <input type="text" class="form-control qual-issuer" placeholder="Issuer">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" class="form-control qual-date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control qual-description" placeholder="Description"></textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add research activity
+        function addResearchActivity() {
+            const container = document.getElementById('research-activities-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control research-title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label>Institution/Organization</label>
+                    <input type="text" class="form-control research-institution" placeholder="Institution/Organization">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" class="form-control research-date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control research-description" placeholder="Description"></textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add activity/association
+        function addActivityAssociation() {
+            const container = document.getElementById('activities-associations-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control activity-title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label>Organization</label>
+                    <input type="text" class="form-control activity-organization" placeholder="Organization">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" class="form-control activity-date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control activity-description" placeholder="Description"></textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add extracurricular activity
+        function addExtracurricular() {
+            const container = document.getElementById('extracurricular-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control extracurricular-title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label>Organization</label>
+                    <input type="text" class="form-control extracurricular-organization" placeholder="Organization">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" class="form-control extracurricular-date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control extracurricular-description" placeholder="Description"></textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add project category
+        function addProjectCategory() {
+            const container = document.getElementById('project-categories-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <input type="text" class="form-control project-category" placeholder="Category">
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add project
+        function addProject() {
+            const container = document.getElementById('projects-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            
+            let projectCategoriesHTML = '';
+            const projectCategoriesContainer = document.getElementById('project-categories-container');
+            const categories = Array.from(projectCategoriesContainer.querySelectorAll('.project-category'))
+                .map(input => input.value)
+                .filter(value => value.trim() !== '');
+            
+            categories.forEach(category => {
+                projectCategoriesHTML += `<option value="${category}">${category}</option>`;
+            });
+            
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control project-title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control project-description" placeholder="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Full Description</label>
+                    <textarea class="form-control project-full-description" placeholder="Full Description"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control project-category-select">
+                            ${projectCategoriesHTML}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control project-status">
+                            <option value="Completed">Completed</option>
+                            <option value="Ongoing">Ongoing</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Image Path</label>
+                    <input type="text" class="form-control project-image" placeholder="Image Path">
+                </div>
+                <div class="form-group">
+                    <label>YouTube Video Link</label>
+                    <input type="text" class="form-control project-youtube" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+                <div class="form-group">
+                    <label>Tags (comma separated)</label>
+                    <input type="text" class="form-control project-tags" placeholder="Tags">
+                </div>
+                <div class="form-group">
+                    <label>Technologies (comma separated)</label>
+                    <input type="text" class="form-control project-technologies" placeholder="Technologies">
+                </div>
+                <div class="form-group">
+                    <label>Features (one per line)</label>
+                    <textarea class="form-control project-features" placeholder="Features"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Icon (Font Awesome class)</label>
+                    <input type="text" class="form-control project-icon" placeholder="fas fa-icon">
+                </div>
+                <div class="form-group">
+                    <label>Project Links</label>
+                    <div class="project-links-list">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" class="form-control project-link-text" placeholder="Link Text">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control project-link-url" placeholder="URL">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control project-link-icon" placeholder="Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addProjectLink(this)">Add Link</button>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Add project link
+        function addProjectLink(button) {
+            const linksList = button.previousElementSibling;
+            const newLink = document.createElement('div');
+            newLink.classList.add('form-row');
+            newLink.innerHTML = `
+                <div class="form-group">
+                    <input type="text" class="form-control project-link-text" placeholder="Link Text">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control project-link-url" placeholder="URL">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control project-link-icon" placeholder="Icon">
+                </div>
+            `;
+            linksList.appendChild(newLink);
+            saveData(); // Save after adding
+        }
+
+        // Add social link
+        function addSocial() {
+            const container = document.getElementById('social-container');
+            const newItem = document.createElement('div');
+            newItem.classList.add('item-group');
+            newItem.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Platform</label>
+                        <input type="text" class="form-control social-platform" placeholder="Platform">
+                    </div>
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input type="text" class="form-control social-url" placeholder="URL">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Icon (Font Awesome class)</label>
+                    <input type="text" class="form-control social-icon" placeholder="fab fa-icon">
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+            saveData(); // Save after adding
+        }
+
+        // Knowledge Base Functions
+        function setupKnowledgeBaseEvents() {
+            // Add KB item
+            document.getElementById('add-kb-item').addEventListener('click', function() {
+                const container = document.getElementById('kb-container');
+                const newItem = document.createElement('div');
+                newItem.classList.add('kb-item');
+                newItem.innerHTML = `
+                    <div class="kb-question" contenteditable="true">New Question</div>
+                    <div class="kb-answer" contenteditable="true">New Answer</div>
+                    <div class="kb-controls">
+                        <button class="btn btn-secondary edit-kb">Edit</button>
+                        <button class="btn btn-warning remove-kb">Remove</button>
+                    </div>
+                `;
+                container.appendChild(newItem);
+                saveData();
+                setupKnowledgeBaseItemEvents(newItem);
+            });
+            
+            // Set up events for existing KB items
+            document.querySelectorAll('#kb-container .kb-item').forEach(item => {
+                setupKnowledgeBaseItemEvents(item);
+            });
+            
+            // KB search
+            document.getElementById('kb-search').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const items = document.querySelectorAll('#kb-container .kb-item');
+                
+                items.forEach(item => {
+                    const question = item.querySelector('.kb-question').textContent.toLowerCase();
+                    const answer = item.querySelector('.kb-answer').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+            
+            // AI test chat
+            document.getElementById('ai-test-send').addEventListener('click', function() {
+                const input = document.getElementById('ai-test-input');
+                const question = input.value.trim();
+                
+                if (question) {
+                    // Add user message
+                    const preview = document.getElementById('ai-preview');
+                    const userMessage = document.createElement('div');
+                    userMessage.classList.add('ai-message', 'ai-user');
+                    userMessage.textContent = question;
+                    preview.appendChild(userMessage);
+                    
+                    // Get AI response
+                    const response = getAIResponse(question);
+                    
+                    // Add bot message
+                    const botMessage = document.createElement('div');
+                    botMessage.classList.add('ai-message', 'ai-bot');
+                    botMessage.textContent = response;
+                    preview.appendChild(botMessage);
+                    
+                    // Clear input and scroll to bottom
+                    input.value = '';
+                    preview.scrollTop = preview.scrollHeight;
+                }
+            });
+            
+            // Enter key for AI test
+            document.getElementById('ai-test-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('ai-test-send').click();
+                }
+            });
+            
+            // Export KB
+            document.getElementById('export-kb').addEventListener('click', function() {
+                const knowledgeBase = Array.from(document.querySelectorAll('#kb-container .kb-item')).map(item => ({
+                    question: item.querySelector('.kb-question').textContent,
+                    answer: item.querySelector('.kb-answer').textContent
+                }));
+                
+                const jsonString = JSON.stringify(knowledgeBase, null, 2);
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'knowledgebase.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showMessage('Knowledge base exported successfully!', 'success');
+            });
+            
+            // Import KB
+            document.getElementById('import-kb').addEventListener('click', function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const knowledgeBase = JSON.parse(e.target.result);
+                            const container = document.getElementById('kb-container');
+                            container.innerHTML = '';
+                            
+                            knowledgeBase.forEach(kbItem => {
+                                const newItem = document.createElement('div');
+                                newItem.classList.add('kb-item');
+                                newItem.innerHTML = `
+                                    <div class="kb-question">${kbItem.question}</div>
+                                    <div class="kb-answer">${kbItem.answer}</div>
+                                    <div class="kb-controls">
+                                        <button class="btn btn-secondary edit-kb">Edit</button>
+                                        <button class="btn btn-warning remove-kb">Remove</button>
+                                    </div>
+                                `;
+                                container.appendChild(newItem);
+                            });
+                            
+                            setupKnowledgeBaseEvents();
+                            saveData();
+                            showMessage('Knowledge base imported successfully!', 'success');
+                        } catch (error) {
+                            showMessage('Error importing knowledge base: Invalid JSON format', 'error');
+                        }
+                    };
+                    reader.readAsText(file);
+                };
+                input.click();
+            });
+        }
+        
+        function setupKnowledgeBaseItemEvents(item) {
+            const editBtn = item.querySelector('.edit-kb');
+            const removeBtn = item.querySelector('.remove-kb');
+            const question = item.querySelector('.kb-question');
+            const answer = item.querySelector('.kb-answer');
+            
+            let isEditing = false;
+            
+            editBtn.addEventListener('click', function() {
+                if (isEditing) {
+                    // Save changes
+                    question.contentEditable = false;
+                    answer.contentEditable = false;
+                    editBtn.textContent = 'Edit';
+                    saveData();
+                } else {
+                    // Enable editing
+                    question.contentEditable = true;
+                    answer.contentEditable = true;
+                    editBtn.textContent = 'Save';
+                }
+                isEditing = !isEditing;
+            });
+            
+            removeBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to remove this Q&A pair?')) {
+                    item.remove();
+                    saveData();
+                }
+            });
+        }
+        
+        function getAIResponse(question) {
+            const knowledgeBase = Array.from(document.querySelectorAll('#kb-container .kb-item')).map(item => ({
+                question: item.querySelector('.kb-question').textContent.toLowerCase(),
+                answer: item.querySelector('.kb-answer').textContent
+            }));
+            
+            const lowercaseQuestion = question.toLowerCase();
+            
+            // Exact match
+            for (const item of knowledgeBase) {
+                if (item.question === lowercaseQuestion) {
+                    return item.answer;
+                }
+            }
+            
+            // Partial match
+            for (const item of knowledgeBase) {
+                if (lowercaseQuestion.includes(item.question) || item.question.includes(lowercaseQuestion)) {
+                    return item.answer;
+                }
+            }
+            
+            // Keyword matching
+            const keywords = {
+                'education': 'I hold a Master of Science in Mechanical Engineering from Stanford University.',
+                'experience': 'I have over 8 years of experience in mechanical engineering across various industries.',
+                'skills': 'My key skills include CAD design, finite element analysis, and project management.',
+                'contact': 'You can reach me at john.doe@example.com or +1 (555) 123-4567.',
+                'projects': 'I have worked on various engineering projects including turbine blade design and automation systems.'
+            };
+            
+            for (const [keyword, response] of Object.entries(keywords)) {
+                if (lowercaseQuestion.includes(keyword)) {
+                    return response;
+                }
+            }
+            
+            // Default response
+            return "I'm not sure how to answer that. Could you please rephrase your question or ask about my education, experience, skills, or projects?";
+        }
+
+        // Generate JSON
+        document.getElementById('generateJson').addEventListener('click', function() {
+            const portfolioData = collectFormData();
+            
+            // Display JSON
+            const jsonOutput = document.getElementById('jsonCode');
+            jsonOutput.textContent = JSON.stringify(portfolioData, null, 2);
+            
+            // Navigate to JSON output section
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            document.querySelector('a[href="#json-output"]').classList.add('active');
+            document.getElementById('json-output').classList.add('active');
+        });
+
+        // Copy JSON to clipboard
+        document.getElementById('copyJson').addEventListener('click', function() {
+            const jsonCode = document.getElementById('jsonCode').textContent;
+            navigator.clipboard.writeText(jsonCode).then(() => {
+                const successMessage = document.getElementById('copySuccess');
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            });
+        });
+
+        // Image upload handling
+        document.getElementById('hero-image').addEventListener('change', function(e) {
+            handleImageUpload(e, 'hero-image-path', 'hero-preview');
+        });
+
+        document.getElementById('about-image').addEventListener('change', function(e) {
+            handleImageUpload(e, 'about-image-path', 'about-preview');
+        });
+
+        function handleImageUpload(event, pathInputId, previewId) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(pathInputId).value = e.target.result;
+                    updateImagePreview(previewId, e.target.result);
+                    saveData();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Create file input for import
+        const importFileInput = document.createElement('input');
+        importFileInput.type = 'file';
+        importFileInput.accept = '.json';
+        importFileInput.style.display = 'none';
+        document.body.appendChild(importFileInput);
+
+        // Set up import functionality
+        importFileInput.addEventListener('change', importData);
+        document.getElementById('importJson').addEventListener('click', () => importFileInput.click());
+        document.getElementById('importJson2').addEventListener('click', () => importFileInput.click());
+
+        // Set up export functionality
+        document.getElementById('exportJson').addEventListener('click', exportData);
+        document.getElementById('exportJson2').addEventListener('click', exportData);
+
+        // Set up other data management buttons
+        document.getElementById('saveData').addEventListener('click', saveData);
+        document.getElementById('loadData').addEventListener('click', loadData);
+        document.getElementById('clearData').addEventListener('click', clearData);
+
+        // Add event listeners to all form inputs for auto-saving
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved data when page loads
+            loadData();
+            
+            // Add input event listeners to all form controls
+            const formControls = document.querySelectorAll('.form-control');
+            formControls.forEach(control => {
+                control.addEventListener('input', saveData);
+            });
+            
+            // Set up knowledge base events
+            setupKnowledgeBaseEvents();
+        });
+    </script>
+</body>
+</html>
