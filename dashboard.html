@@ -500,6 +500,78 @@
             cursor: pointer;
         }
 
+        /* Password Protection Styles */
+        .password-protection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .password-form {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .password-form h2 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .password-form p {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--light);
+            border-radius: 5px;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .password-submit {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .password-submit:hover {
+            background-color: #c0392b;
+        }
+
+        .password-error {
+            color: var(--accent);
+            margin-top: 10px;
+            display: none;
+        }
+
+        .password-change {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
         @media (max-width: 992px) {
             .dashboard {
                 grid-template-columns: 1fr;
@@ -529,6 +601,17 @@
     </style>
 </head>
 <body class="dark-mode">
+    <!-- Password Protection Overlay -->
+    <div class="password-protection" id="passwordProtection">
+        <div class="password-form">
+            <h2>Portfolio Dashboard Access</h2>
+            <p>Please enter the password to access the dashboard:</p>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Enter password">
+            <button class="password-submit" id="passwordSubmit">Access Dashboard</button>
+            <div class="password-error" id="passwordError">Incorrect password. Please try again.</div>
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <div class="header-content">
@@ -541,6 +624,7 @@
                     <button class="btn btn-warning" id="importJson">Import JSON</button>
                     <button class="btn btn-success" id="exportJson">Export JSON</button>
                     <button class="btn" id="generateJson">Generate JSON</button>
+                    <button class="btn btn-info" id="changePassword">Change Password</button>
                 </div>
             </div>
         </div>
@@ -1312,6 +1396,77 @@ Implemented advanced cooling system</textarea>
     </div>
 
     <script>
+        // Password Protection
+        const PASSWORD_KEY = 'isuru';
+        const DEFAULT_PASSWORD = 'isuru'; // Change this to your preferred default password
+        
+        // Check if password is set, if not set the default
+        if (!localStorage.getItem(PASSWORD_KEY)) {
+            localStorage.setItem(PASSWORD_KEY, DEFAULT_PASSWORD);
+        }
+        
+        // Password protection elements
+        const passwordProtection = document.getElementById('passwordProtection');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordSubmit = document.getElementById('passwordSubmit');
+        const passwordError = document.getElementById('passwordError');
+        const changePasswordBtn = document.getElementById('changePassword');
+        
+        // Check if user is already authenticated
+        if (sessionStorage.getItem('authenticated')) {
+            passwordProtection.style.display = 'none';
+        } else {
+            // Show password protection
+            passwordProtection.style.display = 'flex';
+            
+            // Focus on password input
+            passwordInput.focus();
+        }
+        
+        // Password submission
+        passwordSubmit.addEventListener('click', function() {
+            const enteredPassword = passwordInput.value;
+            const storedPassword = localStorage.getItem(PASSWORD_KEY);
+            
+            if (enteredPassword === storedPassword) {
+                // Correct password - hide protection and set authenticated flag
+                passwordProtection.style.display = 'none';
+                sessionStorage.setItem('authenticated', 'true');
+            } else {
+                // Incorrect password - show error
+                passwordError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+        
+        // Allow Enter key to submit password
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                passwordSubmit.click();
+            }
+        });
+        
+        // Change password functionality
+        changePasswordBtn.addEventListener('click', function() {
+            const currentPassword = prompt('Enter current password:');
+            const storedPassword = localStorage.getItem(PASSWORD_KEY);
+            
+            if (currentPassword === storedPassword) {
+                const newPassword = prompt('Enter new password:');
+                const confirmPassword = prompt('Confirm new password:');
+                
+                if (newPassword && newPassword === confirmPassword) {
+                    localStorage.setItem(PASSWORD_KEY, newPassword);
+                    alert('Password changed successfully!');
+                } else if (newPassword !== confirmPassword) {
+                    alert('Passwords do not match!');
+                }
+            } else {
+                alert('Incorrect current password!');
+            }
+        });
+
         // Save data to localStorage
         function saveData() {
             const data = collectFormData();
