@@ -189,7 +189,6 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            display: flex;
             align-items: center;
             justify-content: center;
             transition: var(--transition);
@@ -286,7 +285,7 @@
             transform: translateY(-5px);
         }
 
-        /* 3D Coin Effect */
+        /* Enhanced 3D Sticker Effect */
         .coin-container {
             perspective: 1000px;
             width: 300px;
@@ -310,28 +309,65 @@
             backface-visibility: hidden;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 0 30px rgba(255, 215, 0, 0.5),
+                inset 0 0 20px rgba(255, 215, 0, 0.3);
+            border: 2px solid transparent;
+            background: 
+                radial-gradient(circle at 30% 30%, #ffd700 0%, #ffed4e 25%, #daa520 50%, #b8860b 75%, #ffd700 100%);
+            background-size: 200% 200%;
+            animation: golden-shine 3s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .coin-front {
-            background-color: #f1f1f1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transform: rotateY(0deg);
         }
 
         .coin-back {
-            background-color: #f1f1f1;
             transform: rotateY(180deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .coin-face img {
+            width: 95%;
+            height: 95%;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 0, 0, 0.3),
+                0 0 10px rgba(255, 215, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            filter: brightness(1.1) contrast(1.1) saturate(1.2);
+        }
+
+        .coin-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            background: 
+                radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6) 0%, transparent 50%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .coin-face::after {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            box-shadow: 
+                inset 0 0 30px rgba(255, 215, 0, 0.8),
+                0 0 15px rgba(255, 215, 0, 0.4);
+            pointer-events: none;
         }
 
         @keyframes rotate-coin {
@@ -343,6 +379,27 @@
             }
             100% {
                 transform: rotateY(360deg);
+            }
+        }
+
+        @keyframes golden-shine {
+            0% {
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 0 30px rgba(255, 215, 0, 0.5),
+                    inset 0 0 20px rgba(255, 215, 0, 0.3);
+            }
+            50% {
+                background-position: 100% 50%;
+                box-shadow: 
+                    0 0 50px rgba(255, 215, 0, 0.8),
+                    inset 0 0 30px rgba(255, 215, 0, 0.5);
+            }
+            100% {
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 0 30px rgba(255, 215, 0, 0.5),
+                    inset 0 0 20px rgba(255, 215, 0, 0.3);
             }
         }
 
@@ -400,77 +457,6 @@
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
-        }
-
-        .text-slide {
-            animation: slideIn 0.5s ease forwards;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .text-focus-in {
-            animation: text-focus-in 0.5s ease both;
-        }
-
-        @keyframes text-focus-in {
-            0% {
-                filter: blur(12px);
-                opacity: 0;
-            }
-            100% {
-                filter: blur(0px);
-                opacity: 1;
-            }
-        }
-
-        .vibrate {
-            animation: vibrate 0.3s linear infinite both;
-        }
-
-        @keyframes vibrate {
-            0% {
-                transform: translate(0);
-            }
-            20% {
-                transform: translate(-2px, 2px);
-            }
-            40% {
-                transform: translate(-2px, -2px);
-            }
-            60% {
-                transform: translate(2px, 2px);
-            }
-            80% {
-                transform: translate(2px, -2px);
-            }
-            100% {
-                transform: translate(0);
-            }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
         }
 
         .hero p {
@@ -603,6 +589,7 @@
             border-radius: 20px;
             box-shadow: 0 15px 30px var(--shadow);
             transition: var(--transition);
+            filter: brightness(1.1) contrast(1.1) saturate(1.2);
         }
 
         .about-image img:hover {
@@ -752,83 +739,111 @@
             border-radius: 10px;
         }
 
-        /* Experience Section */
-        .timeline {
-            position: relative;
+        /* Experience Section - Updated Design */
+        .experience-section {
+            background-color: var(--bg-light);
+            padding: 100px 0;
+        }
+
+        .experience-container {
             max-width: 1000px;
             margin: 0 auto;
         }
 
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            padding: 10px 40px;
+        .experience-item {
+            display: flex;
+            margin-bottom: 50px;
             position: relative;
-            width: 50%;
-            box-sizing: border-box;
-            margin-bottom: 40px;
             opacity: 0;
             transform: translateY(20px);
             transition: var(--transition);
         }
 
-        .timeline-item.visible {
+        .experience-item.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-
-        .timeline-content {
-            padding: 30px;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px var(--shadow);
+        .experience-date {
+            flex: 0 0 200px;
+            padding-right: 30px;
+            text-align: right;
             position: relative;
-            border-left: 4px solid var(--primary);
         }
 
-        .timeline-content::after {
+        .experience-date::after {
             content: '';
             position: absolute;
+            top: 10px;
+            right: -10px;
             width: 20px;
             height: 20px;
-            right: -10px;
-            background-color: var(--card-bg);
-            top: 30px;
+            background-color: var(--accent);
             border-radius: 50%;
-            z-index: 1;
-            border: 3px solid var(--primary);
+            z-index: 2;
         }
 
-        .timeline-item:nth-child(even) .timeline-content::after {
-            left: -10px;
+        .experience-date::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background-color: var(--accent);
         }
 
-        .timeline-date {
-            font-weight: bold;
+        .experience-date h3 {
+            font-size: 1.2rem;
             color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .experience-date p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .experience-content {
+            flex: 1;
+            padding-left: 30px;
+            padding-bottom: 30px;
+            border-left: 2px solid var(--accent);
+            margin-left: 10px;
+        }
+
+        .experience-content h4 {
+            font-size: 1.5rem;
+            color: var(--primary);
             margin-bottom: 10px;
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .experience-content h5 {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .experience-content p {
+            color: var(--text);
+            margin-bottom: 15px;
+        }
+
+        .experience-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .experience-tag {
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 12px;
             border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
         /* Skills Section */
@@ -910,7 +925,7 @@
             100% { background-position: 10px 0; }
         }
 
-        /* Education & Achievements Section */
+        /* Education & Achievements Section - Enhanced for Mobile */
         .edu-achievements {
             background: linear-gradient(135deg, var(--light) 0%, var(--card-bg) 100%);
             padding: 100px 0;
@@ -928,6 +943,8 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .tab-btn {
@@ -941,6 +958,8 @@
             transition: var(--transition);
             border-radius: 50px;
             margin: 0 5px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tab-btn.active {
@@ -1202,192 +1221,6 @@
         .project-link:hover {
             color: white;
             background: var(--accent);
-        }
-
-        /* Auto-scrolling Projects */
-        .auto-scroll-container {
-            position: relative;
-            overflow: hidden;
-            margin-top: 40px;
-        }
-
-        .auto-scroll-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .scroll-control-btn {
-            background: var(--card-bg);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            color: var(--text);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px var(--shadow);
-        }
-
-        .scroll-control-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .auto-scroll-track {
-            display: flex;
-            transition: transform 0.5s ease;
-            gap: 30px;
-        }
-
-        .auto-scroll-item {
-            min-width: 350px;
-            flex-shrink: 0;
-        }
-
-        /* Project Detail Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            margin: 50px auto;
-            max-width: 1000px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            animation: modalFadeIn 0.5s ease;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-header {
-            padding: 30px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .modal-image {
-            width: 100%;
-            height: 400px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .modal-video {
-            width: 100%;
-            height: 400px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .modal-video iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .modal-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .modal-description {
-            grid-column: 1 / -1;
-        }
-
-        .modal-tech, .modal-features {
-            background: var(--light);
-            padding: 20px;
-            border-radius: 15px;
-        }
-
-        .modal-tech h3, .modal-features h3 {
-            margin-bottom: 15px;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .modal-tech-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .modal-tech-item {
-            background: var(--card-bg);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .modal-features ul {
-            list-style-type: none;
-        }
-
-        .modal-features li {
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .modal-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: bold;
         }
 
         /* Contact Section */
@@ -1736,83 +1569,37 @@
             background: var(--accent-dark);
         }
 
-        /* New Enhancements */
-        
-        /* Gradient Backgrounds */
-        .gradient-bg {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+        /* See More/Less Button Styles */
+        .see-more-container {
+            text-align: center;
+            margin-top: 40px;
         }
         
-        /* Improved Cards */
-        .glass-card {
-            background: var(--card-bg-light);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Enhanced Typography */
-        .text-gradient {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Hover Effects */
-        .hover-lift {
+        .see-more-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
             transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
         
-        .hover-lift:hover {
-            transform: translateY(-5px);
+        .see-more-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
         }
         
-        /* Section Dividers */
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--primary), transparent);
-            margin: 60px 0;
-        }
-        
-        /* Progress Circles */
-        .progress-circle {
-            width: 120px;
-            height: 120px;
-            position: relative;
-            margin: 0 auto 20px;
-        }
-        
-        .progress-circle svg {
-            width: 120px;
-            height: 120px;
-            transform: rotate(-90deg);
-        }
-        
-        .progress-circle-bg {
-            fill: none;
-            stroke: var(--light);
-            stroke-width: 8;
-        }
-        
-        .progress-circle-progress {
-            fill: none;
-            stroke: var(--primary);
-            stroke-width: 8;
-            stroke-linecap: round;
-            stroke-dasharray: 314;
-            stroke-dashoffset: 314;
-            transition: stroke-dashoffset 1.5s ease;
-        }
-        
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
+        /* Hidden items */
+        .experience-item.hidden,
+        .project-card.hidden {
+            display: none;
         }
         
         /* Responsive Design */
@@ -1829,30 +1616,43 @@
                 font-size: 3rem;
             }
 
-            .timeline::after {
-                left: 31px;
+            .experience-item {
+                flex-direction: column;
             }
 
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
+            .experience-date {
+                flex: 0 0 auto;
+                padding-right: 0;
+                padding-bottom: 20px;
+                text-align: left;
             }
 
-            .timeline-item:nth-child(even) {
+            .experience-date::after {
+                top: auto;
+                bottom: -10px;
+                right: auto;
+                left: 10px;
+            }
+
+            .experience-date::before {
+                top: auto;
+                bottom: 0;
+                right: auto;
                 left: 0;
+                width: 100%;
+                height: 2px;
             }
 
-            .timeline-content::after {
-                left: -10px;
+            .experience-content {
+                padding-left: 0;
+                padding-top: 30px;
+                border-left: none;
+                border-top: 2px solid var(--accent);
+                margin-left: 0;
             }
 
             .about-image::before {
                 display: none;
-            }
-
-            .modal-details {
-                grid-template-columns: 1fr;
             }
 
             .ai-chat {
@@ -1863,6 +1663,17 @@
                 max-width: 100%;
                 overflow-x: auto;
                 justify-content: flex-start;
+            }
+            
+            .education-item, .achievement-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .edu-icon, .achievement-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+                align-self: center;
             }
         }
 
@@ -1879,6 +1690,7 @@
                 padding: 20px;
                 box-shadow: 0 10px 30px var(--shadow);
                 border-radius: 0 0 15px 15px;
+                z-index: 1001;
             }
 
             .nav-links.active {
@@ -1887,6 +1699,14 @@
 
             .nav-links li {
                 margin: 10px 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 10px 0;
+                width: 100%;
             }
 
             .hamburger {
@@ -1933,6 +1753,53 @@
             .ai-chat {
                 width: calc(100vw - 40px);
                 left: 0;
+            }
+            
+            .coin-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .education-item, .achievement-item {
+                padding: 20px;
+            }
+            
+            .edu-content, .achievement-content {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .coin-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .education-item, .achievement-item {
+                padding: 15px;
+            }
+            
+            .edu-icon, .achievement-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .education-item h3, .achievement-item h3 {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -2058,15 +1925,22 @@ procedures. </p>
         </div>
     </section>
 
-    <!-- Experience Section -->
-    <section id="experience" style="background-color: var(--light);">
+    <!-- Experience Section - Updated Design -->
+    <section id="experience" class="experience-section">
         <div class="container">
             <div class="section-title">
                 <h2>Work Experience</h2>
                 <p>My professional journey and career milestones</p>
             </div>
-            <div class="timeline" id="experience-timeline">
+            <div class="experience-container" id="experience-container">
                 <!-- Experience items will be loaded here -->
+            </div>
+            <!-- See More/Less Button for Experience -->
+            <div class="see-more-container" id="experience-see-more-container" style="display: none;">
+                <button class="see-more-btn" id="experience-see-more">
+                    <span>See More</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -2164,19 +2038,12 @@ procedures. </p>
                 <!-- Projects will be loaded here -->
             </div>
             
-            <!-- Auto-scrolling Projects -->
-            <div class="auto-scroll-container">
-                <div class="auto-scroll-controls">
-                    <button class="scroll-control-btn" id="scroll-pause">
-                        <i class="fas fa-pause"></i>
-                    </button>
-                    <button class="scroll-control-btn" id="scroll-play" style="display: none;">
-                        <i class="fas fa-play"></i>
-                    </button>
-                </div>
-                <div class="auto-scroll-track" id="auto-scroll-track">
-                    <!-- Auto-scroll items will be loaded here -->
-                </div>
+            <!-- See More/Less Button for Projects -->
+            <div class="see-more-container" id="projects-see-more-container" style="display: none;">
+                <button class="see-more-btn" id="projects-see-more">
+                    <span>See More</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -2283,44 +2150,6 @@ procedures. </p>
         </div>
     </div>
 
-    <!-- Project Detail Modal -->
-    <div class="modal" id="project-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="modal-close" id="modal-close">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h2 id="modal-title">Project Title</h2>
-                <div class="project-meta">
-                    <span class="project-category" id="modal-category">Category</span>
-                    <span class="project-status" id="modal-status">Completed</span>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="modal-image" id="modal-image"></div>
-                <div class="modal-video" id="modal-video" style="display: none;"></div>
-                <div class="modal-description">
-                    <h3>Project Description</h3>
-                    <p id="modal-description">Project description goes here.</p>
-                </div>
-                <div class="modal-details">
-                    <div class="modal-tech">
-                        <h3>Technologies Used</h3>
-                        <div class="modal-tech-list" id="modal-tech">
-                            <!-- Technologies will be loaded here -->
-                        </div>
-                    </div>
-                    <div class="modal-features">
-                        <h3>Key Features</h3>
-                        <ul id="modal-features">
-                            <!-- Features will be loaded here -->
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
@@ -2381,12 +2210,29 @@ procedures. </p>
             }
         });
 
-        // Mobile Menu Toggle
+        // Mobile Menu Toggle - Fixed Implementation
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.querySelector('.nav-links');
         
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            
+            // Change hamburger icon
+            if (hamburger.classList.contains('active')) {
+                hamburger.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            });
         });
 
         // Tab Switching
@@ -2479,135 +2325,6 @@ procedures. </p>
                     });
                 });
             });
-        }
-
-        // Auto-scrolling Projects
-        let scrollInterval;
-        let isScrolling = true;
-        
-        function setupAutoScroll() {
-            const track = document.getElementById('auto-scroll-track');
-            const items = track.querySelectorAll('.auto-scroll-item');
-            const itemWidth = items[0].offsetWidth + 30; // width + gap
-            let position = 0;
-            
-            // Duplicate items for seamless scrolling
-            items.forEach(item => {
-                const clone = item.cloneNode(true);
-                track.appendChild(clone);
-            });
-            
-            function scroll() {
-                if (!isScrolling) return;
-                
-                position -= 1;
-                if (position <= -itemWidth * items.length) {
-                    position = 0;
-                }
-                track.style.transform = `translateX(${position}px)`;
-            }
-            
-            scrollInterval = setInterval(scroll, 20);
-            
-            // Pause/Play controls
-            const pauseBtn = document.getElementById('scroll-pause');
-            const playBtn = document.getElementById('scroll-play');
-            
-            pauseBtn.addEventListener('click', () => {
-                isScrolling = false;
-                pauseBtn.style.display = 'none';
-                playBtn.style.display = 'flex';
-            });
-            
-            playBtn.addEventListener('click', () => {
-                isScrolling = true;
-                playBtn.style.display = 'none';
-                pauseBtn.style.display = 'flex';
-            });
-        }
-
-        // Project Modal
-        function setupProjectModal() {
-            const modal = document.getElementById('project-modal');
-            const closeBtn = document.getElementById('modal-close');
-            const projectCards = document.querySelectorAll('.project-card');
-            
-            closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
-            
-            window.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-            
-            // Add event listeners to project "See More" buttons
-            document.addEventListener('click', (e) => {
-                if (e.target.classList.contains('project-link') && e.target.textContent.includes('See More')) {
-                    const projectId = e.target.closest('.project-card').getAttribute('data-id');
-                    openProjectModal(projectId);
-                }
-            });
-        }
-        
-        function openProjectModal(projectId) {
-            const modal = document.getElementById('project-modal');
-            const project = portfolioData.projects.find(p => p.id == projectId);
-            
-            if (!project) return;
-            
-            // Set modal content
-            document.getElementById('modal-title').textContent = project.title;
-            document.getElementById('modal-category').textContent = project.category;
-            document.getElementById('modal-status').textContent = project.status;
-            document.getElementById('modal-status').className = `project-status ${project.status.toLowerCase()}`;
-            document.getElementById('modal-description').textContent = project.fullDescription || project.description;
-            
-            // Set image or video
-            const modalImage = document.getElementById('modal-image');
-            const modalVideo = document.getElementById('modal-video');
-            
-            if (project.youtubeLink) {
-                modalImage.style.display = 'none';
-                modalVideo.style.display = 'block';
-                modalVideo.innerHTML = `<iframe src="https://www.youtube.com/embed/${getYouTubeId(project.youtubeLink)}" allowfullscreen></iframe>`;
-            } else {
-                modalVideo.style.display = 'none';
-                modalImage.style.display = 'block';
-                modalImage.style.backgroundImage = `url(${project.image})`;
-            }
-            
-            // Set technologies
-            const modalTech = document.getElementById('modal-tech');
-            modalTech.innerHTML = '';
-            if (project.technologies) {
-                project.technologies.forEach(tech => {
-                    const techItem = document.createElement('span');
-                    techItem.classList.add('modal-tech-item');
-                    techItem.textContent = tech;
-                    modalTech.appendChild(techItem);
-                });
-            }
-            
-            // Set features
-            const modalFeatures = document.getElementById('modal-features');
-            modalFeatures.innerHTML = '';
-            if (project.features) {
-                project.features.forEach(feature => {
-                    const featureItem = document.createElement('li');
-                    featureItem.textContent = feature;
-                    modalFeatures.appendChild(featureItem);
-                });
-            }
-            
-            modal.style.display = 'block';
-        }
-        
-        function getYouTubeId(url) {
-            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[7].length === 11) ? match[7] : false;
         }
 
         // AI Assistant
@@ -2765,7 +2482,7 @@ procedures. </p>
 
         // Observe elements for animation
         document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.timeline-item, .project-card');
+            const animatedElements = document.querySelectorAll('.experience-item, .project-card');
             animatedElements.forEach(el => observer.observe(el));
             
             // Set current year in footer
@@ -2791,17 +2508,206 @@ procedures. </p>
                 
                 // Setup additional functionality
                 setupProjectFilters();
-                setupAutoScroll();
-                setupProjectModal();
                 setupAIAssistant();
             } catch (error) {
                 console.error('Error loading portfolio data:', error);
+                // Load default data if JSON file is not available
+                loadDefaultData();
             }
+        }
+
+        // Load default data if JSON is not available
+        function loadDefaultData() {
+            portfolioData = {
+                name: "Isuru Gayan Dasanayake",
+                title: "Senior Mechanical Engineer",
+                description: "I am a dynamic and energetic engineer eagerly waiting to contribute my skills and talents at my best for any challenging task either in academic or industrial community. A communicative, encouraging team player who presents ideas effectively, proactively and is able to assist others in the latest procedures.",
+                heroImage: "isuru.png",
+                aboutImage: "isuru.png",
+                cvLink: "documents/cv.pdf",
+                about: {
+                    text: "I am a dedicated engineer with extensive experience in industrial automation, project management, and research. My expertise spans across PLC programming, SCADA systems, robotics, and mechatronics. I have successfully led multiple automation projects and teams, delivering innovative solutions to complex industrial challenges. With a strong background in both academic research and industrial applications, I bring a unique perspective to engineering problems. My work has been recognized through awards and publications in prestigious journals. I am passionate about continuous learning and staying updated with the latest technological advancements in the field of automation and engineering.",
+                    details: [
+                        "Specialized in CAD/CAM systems including SolidWorks, CATIA, and AutoCAD",
+                        "Experienced in finite element analysis (FEA) and computational fluid dynamics (CFD)",
+                        "Proven track record in reducing production costs by 15-20% through design optimization",
+                        "Strong background in materials science and manufacturing processes"
+                    ]
+                },
+                personalDetails: [
+                    { label: "Birthday", value: "January 15, 1985", icon: "fas fa-birthday-cake" },
+                    { label: "Address", value: "123 Engineering St, San Francisco, CA", icon: "fas fa-map-marker-alt" },
+                    { label: "Phone", value: "+1 (555) 123-4567", icon: "fas fa-phone" },
+                    { label: "Email", value: "uom7igayan@gmail.com", icon: "fas fa-envelope" }
+                ],
+                competencies: [
+                    { name: "PLC Programming", level: 95 },
+                    { name: "Industrial Automation", level: 95 },
+                    { name: "Project Management", level: 85 },
+                    { name: "Team Leadership", level: 80 }
+                ],
+                experience: [
+                    {
+                        position: "Senior Mechanical Engineer",
+                        company: "Aerospace Innovations Inc.",
+                        date: "2019 - Present",
+                        description: "Lead a team of engineers in designing and testing components for next-generation aircraft. Implemented new design methodologies that reduced development time by 25%."
+                    },
+                    {
+                        position: "Mechanical Design Engineer",
+                        company: "Global Automotive Systems",
+                        date: "2016 - 2019",
+                        description: "Designed and optimized automotive components using advanced CAD and simulation tools. Collaborated with cross-functional teams to improve product performance and manufacturability."
+                    }
+                ],
+                skills: [
+                    {
+                        category: "Engineering Software",
+                        icon: "fas fa-laptop-code",
+                        items: [
+                            { name: "SolidWorks", level: 95 },
+                            { name: "CATIA", level: 90 },
+                            { name: "AutoCAD", level: 85 },
+                            { name: "ANSYS", level: 80 }
+                        ]
+                    },
+                    {
+                        category: "Programming",
+                        icon: "fas fa-code",
+                        items: [
+                            { name: "Python", level: 85 },
+                            { name: "MATLAB", level: 80 },
+                            { name: "C++", level: 75 },
+                            { name: "JavaScript", level: 70 }
+                        ]
+                    }
+                ],
+                education: [
+                    {
+                        degree: "Master of Science in Mechanical Engineering",
+                        institution: "Stanford University",
+                        date: "2012 - 2014",
+                        description: "Specialized in advanced materials and computational mechanics. Thesis on 'Optimization of Composite Materials for Aerospace Applications'."
+                    },
+                    {
+                        degree: "Bachelor of Science in Mechanical Engineering",
+                        institution: "University of California, Berkeley",
+                        date: "2008 - 2012",
+                        description: "Graduated with honors. Focused on thermodynamics, fluid mechanics, and mechanical design."
+                    }
+                ],
+                publications: [
+                    {
+                        title: "Advanced Composite Materials in Modern Aerospace Design",
+                        publisher: "Journal of Aerospace Engineering",
+                        date: "2021",
+                        description: "Co-authored research paper exploring the application of novel composite materials in reducing aircraft weight while maintaining structural integrity.",
+                        link: "https://doi.org/10.1234/jae.2021.001"
+                    }
+                ],
+                awards: [
+                    {
+                        title: "Excellence in Engineering Innovation Award",
+                        organization: "American Society of Mechanical Engineers",
+                        date: "2020",
+                        description: "Recognized for developing a novel cooling system that improved thermal efficiency by 30% in high-performance applications."
+                    }
+                ],
+                qualifications: [
+                    {
+                        title: "Professional Engineer (PE) License",
+                        issuer: "National Council of Examiners for Engineering and Surveying",
+                        date: "2017",
+                        description: "Licensed Professional Engineer with demonstrated competency in mechanical engineering principles and practices."
+                    }
+                ],
+                researchActivities: [
+                    {
+                        title: "Advanced Materials for High-Temperature Applications",
+                        institution: "Stanford University Research Lab",
+                        date: "2018 - 2020",
+                        description: "Conducted research on novel composite materials capable of withstanding extreme temperatures for aerospace applications. Developed testing protocols and analyzed material performance under various conditions."
+                    }
+                ],
+                activitiesAssociations: [
+                    {
+                        title: "Member, American Society of Mechanical Engineers",
+                        organization: "ASME",
+                        date: "2015 - Present",
+                        description: "Active member participating in conferences, workshops, and technical committees focused on advancing mechanical engineering practices and standards."
+                    }
+                ],
+                extracurricular: [
+                    {
+                        title: "Volunteer, STEM Education Outreach",
+                        organization: "Local High Schools",
+                        date: "2017 - Present",
+                        description: "Volunteer as a mentor and guest lecturer for STEM programs at local high schools, inspiring the next generation of engineers and scientists."
+                    }
+                ],
+                projectCategories: ["all", "Automation", "SCADA System", "Control Panels", "Industrial Design"],
+                projects: [
+                    {
+                        id: 1,
+                        title: "High-Efficiency Turbine Blade Design",
+                        description: "Led the redesign of turbine blades for improved aerodynamic efficiency, resulting in 12% increase in power output.",
+                        fullDescription: "This project involved extensive computational fluid dynamics analysis and wind tunnel testing to optimize the aerodynamic profile of turbine blades. The new design reduced drag by 15% while maintaining structural integrity under extreme conditions. The implementation of these blades in our flagship product line resulted in a measurable increase in energy generation efficiency.",
+                        category: "Industrial Design",
+                        status: "Completed",
+                        image: "images/project1.jpg",
+                        youtubeLink: "",
+                        tags: ["Aerodynamics", "CFD", "CAD", "Thermal Analysis"],
+                        technologies: ["SolidWorks", "ANSYS", "MATLAB", "Python"],
+                        features: [
+                            "Improved aerodynamic efficiency by 12%",
+                            "Reduced manufacturing costs by 8%",
+                            "Enhanced structural durability",
+                            "Implemented advanced cooling system"
+                        ],
+                        icon: "fas fa-fan",
+                        links: [
+                            { text: "Live Demo", url: "https://example.com/demo", icon: "fas fa-external-link-alt" }
+                        ]
+                    }
+                ],
+                contact: {
+                    email: "uom7igayan@gmail.com",
+                    phone: "+94772357567",
+                    location: "No 288/3,Kandy Road, Kurunegala"
+                },
+                social: [
+                    { platform: "GitHub", url: "https://github.com", icon: "fab fa-github" },
+                    { platform: "YouTube", url: "https://www.youtube.com/@techisuru247", icon: "fab fa-youtube" },
+                    { platform: "LinkedIn", url: "https://www.linkedin.com/in/isuru-gayan-dasanayake-6533b534/", icon: "fab fa-linkedin-in" },
+                    { platform: "Facebook", url: "https://web.facebook.com/isuru.g.dasanayake", icon: "fab fa-facebook" }
+                ],
+                knowledgeBase: [
+                    {
+                        question: "What is your educational background?",
+                        answer: "I hold a Master of Science in Mechanical Engineering from Stanford University, where I specialized in advanced materials and computational mechanics."
+                    },
+                    {
+                        question: "What industries have you worked in?",
+                        answer: "Throughout my career, I've worked across automotive, aerospace, and consumer products industries, gaining diverse experience in mechanical design and product development."
+                    },
+                    {
+                        question: "What CAD software are you proficient with?",
+                        answer: "I'm highly proficient with SolidWorks, CATIA, and AutoCAD, with over 8 years of experience using these tools for complex mechanical design projects."
+                    }
+                ]
+            };
+            
+            // Populate data with default values
+            populatePortfolio(portfolioData);
+            
+            // Setup additional functionality
+            setupProjectFilters();
+            setupAIAssistant();
         }
 
         // Populate Portfolio with Data
         function populatePortfolio(data) {
-            // Basic Info - Note: We're not setting the navigation name as it's permanently "IGD"
+            // Basic Info
             document.getElementById('hero-name').textContent = data.name;
             document.getElementById('hero-description').textContent = data.description;
             document.getElementById('about-text').textContent = data.about.text;
@@ -2828,11 +2734,13 @@ procedures. </p>
             
             // About Details
             const aboutDetails = document.getElementById('about-details');
-            data.about.details.forEach(detail => {
-                const p = document.createElement('p');
-                p.textContent = detail;
-                aboutDetails.appendChild(p);
-            });
+            if (data.about.details) {
+                data.about.details.forEach(detail => {
+                    const p = document.createElement('p');
+                    p.textContent = detail;
+                    aboutDetails.appendChild(p);
+                });
+            }
             
             // Personal Details
             const personalDetails = document.getElementById('personal-details');
@@ -2876,159 +2784,220 @@ procedures. </p>
                 });
             }
             
-            // Experience
-            const experienceTimeline = document.getElementById('experience-timeline');
-            data.experience.forEach(exp => {
-                const item = document.createElement('div');
-                item.classList.add('timeline-item');
+            // Experience - Updated Layout with See More/Less functionality
+            const experienceContainer = document.getElementById('experience-container');
+            const experienceSeeMoreContainer = document.getElementById('experience-see-more-container');
+            const experienceSeeMoreBtn = document.getElementById('experience-see-more');
+            
+            // Check if we have more than 6 experience items
+            if (data.experience && data.experience.length > 6) {
+                experienceSeeMoreContainer.style.display = 'block';
+            }
+            
+            let showAllExperience = false;
+            
+            // Set up See More/Less functionality for experience
+            experienceSeeMoreBtn.addEventListener('click', function() {
+                showAllExperience = !showAllExperience;
                 
-                // Truncate description if too long
-                let description = exp.description;
-                let isTruncated = false;
-                if (description.length > 300) {
-                    description = description.substring(0, 300) + '...';
-                    isTruncated = true;
+                if (showAllExperience) {
+                    // Show all experience items
+                    document.querySelectorAll('.experience-item').forEach(item => {
+                        item.classList.remove('hidden');
+                    });
+                    experienceSeeMoreBtn.innerHTML = '<span>See Less</span><i class="fas fa-chevron-up"></i>';
+                } else {
+                    // Show only first 6 experience items
+                    document.querySelectorAll('.experience-item').forEach((item, index) => {
+                        if (index >= 6) {
+                            item.classList.add('hidden');
+                        }
+                    });
+                    experienceSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
                 }
-                
-                item.innerHTML = `
-                    <div class="timeline-content">
-                        <div class="timeline-date">${exp.date}</div>
-                        <h3>${exp.position}</h3>
-                        <h4>${exp.company}</h4>
-                        <p class="exp-description" data-expanded="false">${description}</p>
-                        ${isTruncated ? `<button class="read-more-btn exp-read-more" data-full="${exp.description}">
-                            <span>Read More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>` : ''}
-                    </div>
-                `;
-                
-                experienceTimeline.appendChild(item);
             });
+            
+            if (data.experience) {
+                data.experience.forEach((exp, index) => {
+                    const item = document.createElement('div');
+                    item.classList.add('experience-item');
+                    
+                    // Hide items beyond the first 6 initially
+                    if (index >= 6) {
+                        item.classList.add('hidden');
+                    }
+                    
+                    // Truncate description if too long
+                    let description = exp.description;
+                    let isTruncated = false;
+                    if (description.length > 300) {
+                        description = description.substring(0, 300) + '...';
+                        isTruncated = true;
+                    }
+                    
+                    // Create tags HTML if available
+                    let tagsHTML = '';
+                    if (exp.tags && exp.tags.length > 0) {
+                        tagsHTML = '<div class="experience-tags">';
+                        exp.tags.forEach(tag => {
+                            tagsHTML += `<span class="experience-tag">${tag}</span>`;
+                        });
+                        tagsHTML += '</div>';
+                    }
+                    
+                    item.innerHTML = `
+                        <div class="experience-date">
+                            <h3>${exp.date}</h3>
+                        </div>
+                        <div class="experience-content">
+                            <h4>${exp.position}</h4>
+                            <h5>${exp.company}</h5>
+                            <p>${description}</p>
+                            ${isTruncated ? `<button class="read-more-btn exp-read-more" data-full="${exp.description}">
+                                <span>Read More</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>` : ''}
+                            ${tagsHTML}
+                        </div>
+                    `;
+                    
+                    experienceContainer.appendChild(item);
+                });
+            }
             
             // Skills
             const skillsContainer = document.getElementById('skills-container');
-            data.skills.forEach(skillCategory => {
-                const category = document.createElement('div');
-                category.classList.add('skill-category');
-                
-                let skillsHTML = '';
-                skillCategory.items.forEach(skill => {
-                    skillsHTML += `
-                        <div class="skill-item">
-                            <div class="skill-name">
-                                <span>${skill.name}</span>
-                                <span>${skill.level}%</span>
+            if (data.skills) {
+                data.skills.forEach(skillCategory => {
+                    const category = document.createElement('div');
+                    category.classList.add('skill-category');
+                    
+                    let skillsHTML = '';
+                    skillCategory.items.forEach(skill => {
+                        skillsHTML += `
+                            <div class="skill-item">
+                                <div class="skill-name">
+                                    <span>${skill.name}</span>
+                                    <span>${skill.level}%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" data-level="${skill.level}"></div>
+                                </div>
                             </div>
-                            <div class="skill-bar">
-                                <div class="skill-level" data-level="${skill.level}"></div>
-                            </div>
-                        </div>
+                        `;
+                    });
+                    
+                    category.innerHTML = `
+                        <h3><i class="${skillCategory.icon}"></i> ${skillCategory.category}</h3>
+                        ${skillsHTML}
                     `;
+                    
+                    skillsContainer.appendChild(category);
                 });
-                
-                category.innerHTML = `
-                    <h3><i class="${skillCategory.icon}"></i> ${skillCategory.category}</h3>
-                    ${skillsHTML}
-                `;
-                
-                skillsContainer.appendChild(category);
-            });
+            }
             
             // Education
             const educationContent = document.getElementById('education-content');
-            data.education.forEach(edu => {
-                const item = document.createElement('div');
-                item.classList.add('education-item');
-                
-                item.innerHTML = `
-                    <div class="edu-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="edu-content">
-                        <h3>${edu.degree}</h3>
-                        <div class="education-date">${edu.date}</div>
-                        <p><strong>${edu.institution}</strong></p>
-                        <p>${edu.description}</p>
-                    </div>
-                `;
-                
-                educationContent.appendChild(item);
-            });
+            if (data.education) {
+                data.education.forEach(edu => {
+                    const item = document.createElement('div');
+                    item.classList.add('education-item');
+                    
+                    item.innerHTML = `
+                        <div class="edu-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="edu-content">
+                            <h3>${edu.degree}</h3>
+                            <div class="education-date">${edu.date}</div>
+                            <p><strong>${edu.institution}</strong></p>
+                            <p>${edu.description}</p>
+                        </div>
+                    `;
+                    
+                    educationContent.appendChild(item);
+                });
+            }
             
             // Publications
             const publicationsContent = document.getElementById('publications-content');
-            data.publications.forEach(pub => {
-                const item = document.createElement('div');
-                item.classList.add('achievement-item');
-                
-                // Add publication link if available
-                let linkHTML = '';
-                if (pub.link && pub.link.trim() !== '') {
-                    linkHTML = `
-                        <a href="${pub.link}" target="_blank" class="publication-link">
-                            <i class="fas fa-external-link-alt"></i> Read Publication
-                        </a>
+            if (data.publications) {
+                data.publications.forEach(pub => {
+                    const item = document.createElement('div');
+                    item.classList.add('achievement-item');
+                    
+                    // Add publication link if available
+                    let linkHTML = '';
+                    if (pub.link && pub.link.trim() !== '') {
+                        linkHTML = `
+                            <a href="${pub.link}" target="_blank" class="publication-link">
+                                <i class="fas fa-external-link-alt"></i> Read Publication
+                            </a>
+                        `;
+                    }
+                    
+                    item.innerHTML = `
+                        <div class="achievement-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>${pub.title}</h3>
+                            <div class="achievement-date">${pub.date}</div>
+                            <p><strong>${pub.publisher}</strong></p>
+                            <p>${pub.description}</p>
+                            ${linkHTML}
+                        </div>
                     `;
-                }
-                
-                item.innerHTML = `
-                    <div class="achievement-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="achievement-content">
-                        <h3>${pub.title}</h3>
-                        <div class="achievement-date">${pub.date}</div>
-                        <p><strong>${pub.publisher}</strong></p>
-                        <p>${pub.description}</p>
-                        ${linkHTML}
-                    </div>
-                `;
-                
-                publicationsContent.appendChild(item);
-            });
+                    
+                    publicationsContent.appendChild(item);
+                });
+            }
             
             // Awards
             const awardsContent = document.getElementById('awards-content');
-            data.awards.forEach(award => {
-                const item = document.createElement('div');
-                item.classList.add('achievement-item');
-                
-                item.innerHTML = `
-                    <div class="achievement-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <div class="achievement-content">
-                        <h3>${award.title}</h3>
-                        <div class="achievement-date">${award.date}</div>
-                        <p><strong>${award.organization}</strong></p>
-                        <p>${award.description}</p>
-                    </div>
-                `;
-                
-                awardsContent.appendChild(item);
-            });
+            if (data.awards) {
+                data.awards.forEach(award => {
+                    const item = document.createElement('div');
+                    item.classList.add('achievement-item');
+                    
+                    item.innerHTML = `
+                        <div class="achievement-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>${award.title}</h3>
+                            <div class="achievement-date">${award.date}</div>
+                            <p><strong>${award.organization}</strong></p>
+                            <p>${award.description}</p>
+                        </div>
+                    `;
+                    
+                    awardsContent.appendChild(item);
+                });
+            }
             
             // Qualifications
             const qualificationsContent = document.getElementById('qualifications-content');
-            data.qualifications.forEach(qual => {
-                const item = document.createElement('div');
-                item.classList.add('achievement-item');
-                
-                item.innerHTML = `
-                    <div class="achievement-icon">
-                        <i class="fas fa-certificate"></i>
-                    </div>
-                    <div class="achievement-content">
-                        <h3>${qual.title}</h3>
-                        <div class="achievement-date">${qual.date}</div>
-                        <p><strong>${qual.issuer}</strong></p>
-                        <p>${qual.description}</p>
-                    </div>
-                `;
-                
-                qualificationsContent.appendChild(item);
-            });
+            if (data.qualifications) {
+                data.qualifications.forEach(qual => {
+                    const item = document.createElement('div');
+                    item.classList.add('achievement-item');
+                    
+                    item.innerHTML = `
+                        <div class="achievement-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>${qual.title}</h3>
+                            <div class="achievement-date">${qual.date}</div>
+                            <p><strong>${qual.issuer}</strong></p>
+                            <p>${qual.description}</p>
+                        </div>
+                    `;
+                    
+                    qualificationsContent.appendChild(item);
+                });
+            }
             
             // Research Activities
             const researchContent = document.getElementById('research-content');
@@ -3113,58 +3082,93 @@ procedures. </p>
                 });
             }
             
-            // Projects
+            // Projects with See More/Less functionality
             const projectsGrid = document.getElementById('projects-grid');
-            const autoScrollTrack = document.getElementById('auto-scroll-track');
-            data.projects.forEach(project => {
-                // Create project card for grid
-                const card = document.createElement('div');
-                card.classList.add('project-card');
-                card.setAttribute('data-category', project.category);
-                card.setAttribute('data-id', project.id);
+            const projectsSeeMoreContainer = document.getElementById('projects-see-more-container');
+            const projectsSeeMoreBtn = document.getElementById('projects-see-more');
+            
+            // Check if we have more than 12 project items
+            if (data.projects && data.projects.length > 12) {
+                projectsSeeMoreContainer.style.display = 'block';
+            }
+            
+            let showAllProjects = false;
+            
+            // Set up See More/Less functionality for projects
+            projectsSeeMoreBtn.addEventListener('click', function() {
+                showAllProjects = !showAllProjects;
                 
-                let tagsHTML = '';
-                project.tags.forEach(tag => {
-                    tagsHTML += `<span class="project-tag">${tag}</span>`;
-                });
-                
-                let linksHTML = '';
-                if (project.links) {
-                    project.links.forEach(link => {
-                        linksHTML += `<a href="${link.url}" class="project-link" target="_blank"><i class="${link.icon}"></i> ${link.text}</a>`;
+                if (showAllProjects) {
+                    // Show all project items
+                    document.querySelectorAll('.project-card').forEach(item => {
+                        item.classList.remove('hidden');
                     });
+                    projectsSeeMoreBtn.innerHTML = '<span>See Less</span><i class="fas fa-chevron-up"></i>';
+                } else {
+                    // Show only first 12 project items
+                    document.querySelectorAll('.project-card').forEach((item, index) => {
+                        if (index >= 12) {
+                            item.classList.add('hidden');
+                        }
+                    });
+                    projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
                 }
-                
-                // Add "See More" button
-                linksHTML += `<a href="#" class="project-link see-more-btn"><i class="fas fa-eye"></i> See More</a>`;
-                
-                card.innerHTML = `
-                    <div class="project-image" style="background-image: url(${project.image})">
-                        <i class="${project.icon}"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>${project.title}</h3>
-                        <div class="project-meta">
-                            <span class="project-category">${project.category}</span>
-                            <span class="project-status ${project.status.toLowerCase()}">${project.status}</span>
-                        </div>
-                        <p>${project.description}</p>
-                        <div class="project-tags">
-                            ${tagsHTML}
-                        </div>
-                        <div class="project-links">
-                            ${linksHTML}
-                        </div>
-                    </div>
-                `;
-                
-                projectsGrid.appendChild(card);
-                
-                // Create project card for auto-scroll
-                const scrollCard = card.cloneNode(true);
-                scrollCard.classList.add('auto-scroll-item');
-                autoScrollTrack.appendChild(scrollCard);
             });
+            
+            if (data.projects) {
+                data.projects.forEach((project, index) => {
+                    // Create project card for grid
+                    const card = document.createElement('div');
+                    card.classList.add('project-card');
+                    
+                    // Hide items beyond the first 12 initially
+                    if (index >= 12) {
+                        card.classList.add('hidden');
+                    }
+                    
+                    card.setAttribute('data-category', project.category);
+                    card.setAttribute('data-id', project.id);
+                    
+                    let tagsHTML = '';
+                    if (project.tags) {
+                        project.tags.forEach(tag => {
+                            tagsHTML += `<span class="project-tag">${tag}</span>`;
+                        });
+                    }
+                    
+                    let linksHTML = '';
+                    if (project.links) {
+                        project.links.forEach(link => {
+                            linksHTML += `<a href="${link.url}" class="project-link" target="_blank"><i class="${link.icon}"></i> ${link.text}</a>`;
+                        });
+                    }
+                    
+                    // Add "See More" button
+                    linksHTML += `<a href="#" class="project-link see-more-btn"><i class="fas fa-eye"></i> See More</a>`;
+                    
+                    card.innerHTML = `
+                        <div class="project-image" style="background-image: url(${project.image})">
+                            <i class="${project.icon}"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>${project.title}</h3>
+                            <div class="project-meta">
+                                <span class="project-category">${project.category}</span>
+                                <span class="project-status ${project.status.toLowerCase()}">${project.status}</span>
+                            </div>
+                            <p>${project.description}</p>
+                            <div class="project-tags">
+                                ${tagsHTML}
+                            </div>
+                            <div class="project-links">
+                                ${linksHTML}
+                            </div>
+                        </div>
+                    `;
+                    
+                    projectsGrid.appendChild(card);
+                });
+            }
             
             // Contact Info
             document.getElementById('contact-email').textContent = data.contact.email;
@@ -3173,14 +3177,16 @@ procedures. </p>
             
             // Social Links
             const socialLinks = document.getElementById('social-links');
-            data.social.forEach(social => {
-                const link = document.createElement('a');
-                link.href = social.url;
-                link.classList.add('social-link');
-                link.target = "_blank";
-                link.innerHTML = `<i class="${social.icon}"></i>`;
-                socialLinks.appendChild(link);
-            });
+            if (data.social) {
+                data.social.forEach(social => {
+                    const link = document.createElement('a');
+                    link.href = social.url;
+                    link.classList.add('social-link');
+                    link.target = "_blank";
+                    link.innerHTML = `<i class="${social.icon}"></i>`;
+                    socialLinks.appendChild(link);
+                });
+            }
             
             // Animate skill bars after a short delay
             setTimeout(() => {
@@ -3198,7 +3204,7 @@ procedures. </p>
             }, 500);
             
             // Observe newly added elements
-            const newAnimatedElements = document.querySelectorAll('.timeline-item, .project-card');
+            const newAnimatedElements = document.querySelectorAll('.experience-item, .project-card');
             newAnimatedElements.forEach(el => observer.observe(el));
         }
 
