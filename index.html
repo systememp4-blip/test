@@ -2251,7 +2251,7 @@ procedures. </p>
         </div>
     </section>
 
-    <!-- Projects Section - Updated with Enhanced Grid and Modal -->
+        <!-- Projects Section - Updated with Enhanced Grid and Modal -->
     <section id="projects">
         <div class="container">
             <div class="section-title">
@@ -2584,15 +2584,20 @@ procedures. </p>
         }, observerOptions);
 
         // Enhanced Project Filtering with See More/Less for each category
+        let currentFilter = 'all';
+        let expandedStates = {}; // Track expanded state for each category
+        
         function setupProjectFilters() {
             const filterBtns = document.querySelectorAll('.filter-btn');
             const projectCards = document.querySelectorAll('.project-card');
             const projectsSeeMoreBtn = document.getElementById('projects-see-more');
             const projectsSeeMoreContainer = document.getElementById('projects-see-more-container');
             
-            // Track current filter and expanded state
-            let currentFilter = 'all';
-            let isExpanded = false;
+            // Initialize expanded states for all categories
+            const categories = ['all', 'Automation', 'SCADA System', 'Control Panels', 'Industrial Design'];
+            categories.forEach(category => {
+                expandedStates[category] = false;
+            });
             
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -2601,31 +2606,19 @@ procedures. </p>
                     // Add active class to clicked button
                     btn.classList.add('active');
                     
-                    currentFilter = btn.getAttribute('data-filter');
+                    const newFilter = btn.getAttribute('data-filter');
+                    currentFilter = newFilter;
                     
-                    // Reset expanded state when changing filter
-                    isExpanded = false;
-                    projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
-                    
-                    // Show/hide projects based on filter
-                    projectCards.forEach(card => {
-                        if (currentFilter === 'all' || card.getAttribute('data-category') === currentFilter) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                    
-                    // Handle See More/Less button for the current filter
-                    updateProjectVisibility(currentFilter, isExpanded);
+                    // Apply the filter with the stored expanded state
+                    applyFilter(newFilter, expandedStates[newFilter]);
                 });
             });
             
             // Set up See More/Less functionality for projects
             projectsSeeMoreBtn.addEventListener('click', function() {
-                isExpanded = !isExpanded;
+                expandedStates[currentFilter] = !expandedStates[currentFilter];
                 
-                if (isExpanded) {
+                if (expandedStates[currentFilter]) {
                     // Show all project items for this category
                     showAllProjects(currentFilter);
                     projectsSeeMoreBtn.innerHTML = '<span>See Less</span><i class="fas fa-chevron-up"></i>';
@@ -2634,27 +2627,42 @@ procedures. </p>
                     showLimitedProjects(currentFilter, 16);
                     projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
                 }
+                
+                // Update button visibility
+                updateSeeMoreButton(currentFilter, expandedStates[currentFilter]);
             });
             
-            // Initialize with limited projects for each category
+            // Initialize with limited projects for "All" category
             initializeProjectVisibility();
         }
         
-        // Initialize project visibility - show only 16 projects initially
+        // Initialize project visibility - show only 16 projects initially for "All"
         function initializeProjectVisibility() {
             const projectCards = document.querySelectorAll('.project-card');
             
-            // Show only first 16 projects
+            // Show only first 16 projects for "All" category
             projectCards.forEach((card, index) => {
-                if (index >= 16) {
-                    card.classList.add('hidden');
-                } else {
+                if (index < 16) {
                     card.classList.remove('hidden');
+                    card.style.display = 'flex';
+                } else {
+                    card.classList.add('hidden');
+                    card.style.display = 'none';
                 }
             });
             
             // Check if we need to show the See More button
             updateSeeMoreButton('all', false);
+        }
+        
+        // Apply filter and show limited projects
+        function applyFilter(category, expanded) {
+            if (expanded) {
+                showAllProjects(category);
+            } else {
+                showLimitedProjects(category, 16);
+            }
+            updateSeeMoreButton(category, expanded);
         }
         
         // Show limited number of projects for a category
@@ -2663,13 +2671,20 @@ procedures. </p>
             let count = 0;
             
             projectCards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
+                const cardCategory = card.getAttribute('data-category');
+                const shouldShow = category === 'all' || cardCategory === category;
+                
+                if (shouldShow) {
                     if (count < limit) {
                         card.classList.remove('hidden');
+                        card.style.display = 'flex';
                     } else {
                         card.classList.add('hidden');
+                        card.style.display = 'none';
                     }
                     count++;
+                } else {
+                    card.style.display = 'none';
                 }
             });
         }
@@ -2679,20 +2694,16 @@ procedures. </p>
             const projectCards = document.querySelectorAll('.project-card');
             
             projectCards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
+                const cardCategory = card.getAttribute('data-category');
+                const shouldShow = category === 'all' || cardCategory === category;
+                
+                if (shouldShow) {
                     card.classList.remove('hidden');
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
                 }
             });
-        }
-        
-        // Update project visibility based on filter and expanded state
-        function updateProjectVisibility(category, expanded) {
-            if (expanded) {
-                showAllProjects(category);
-            } else {
-                showLimitedProjects(category, 16);
-            }
-            updateSeeMoreButton(category, expanded);
         }
         
         // Update See More button visibility and state
@@ -2701,10 +2712,11 @@ procedures. </p>
             const projectsSeeMoreBtn = document.getElementById('projects-see-more');
             const projectCards = document.querySelectorAll('.project-card');
             
-            // Count projects in the current category
+            // Count visible projects in the current category
             let count = 0;
             projectCards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
+                const cardCategory = card.getAttribute('data-category');
+                if (category === 'all' || cardCategory === category) {
                     count++;
                 }
             });
