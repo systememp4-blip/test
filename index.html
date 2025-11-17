@@ -1053,7 +1053,7 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
 
-        /* Projects Section */
+        /* Projects Section - Updated with Enhanced Grid and Modal */
         .projects-container {
             position: relative;
             overflow: hidden;
@@ -1084,9 +1084,10 @@
             color: white;
         }
 
+        /* Enhanced Projects Grid with 4 columns */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
         }
 
@@ -1221,6 +1222,192 @@
         .project-link:hover {
             color: white;
             background: var(--accent);
+        }
+
+        /* Auto-scrolling Projects */
+        .auto-scroll-container {
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .auto-scroll-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .scroll-control-btn {
+            background: var(--card-bg);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: var(--text);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .scroll-control-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .auto-scroll-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 30px;
+        }
+
+        .auto-scroll-item {
+            min-width: 350px;
+            flex-shrink: 0;
+        }
+
+        /* Project Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            margin: 50px auto;
+            max-width: 1000px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.5s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .modal-video {
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .modal-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .modal-description {
+            grid-column: 1 / -1;
+        }
+
+        .modal-tech, .modal-features {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .modal-tech h3, .modal-features h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .modal-tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .modal-tech-item {
+            background: var(--card-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .modal-features ul {
+            list-style-type: none;
+        }
+
+        .modal-features li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .modal-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
         }
 
         /* Contact Section */
@@ -1569,7 +1756,7 @@
             background: var(--accent-dark);
         }
 
-        /* See More/Less Button Styles */
+        /* See More/Less Button Styles for Projects */
         .see-more-container {
             text-align: center;
             margin-top: 40px;
@@ -1602,7 +1789,27 @@
             display: none;
         }
         
+        /* Mobile Theme Toggle - New Style */
+        .mobile-theme-toggle {
+            display: none;
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .mobile-theme-toggle .theme-toggle {
+            margin-left: 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
         @media (max-width: 992px) {
             .hero-content, .about-content, .contact-container {
                 flex-direction: column;
@@ -1674,6 +1881,14 @@
                 margin-right: 0;
                 margin-bottom: 15px;
                 align-self: center;
+            }
+            
+            .modal-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1767,6 +1982,20 @@
             .edu-content, .achievement-content {
                 width: 100%;
             }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Mobile Theme Toggle - Show on mobile */
+            .mobile-theme-toggle {
+                display: block;
+            }
+            
+            /* Hide theme toggle in nav on mobile */
+            .nav-links .theme-toggle {
+                display: none;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1777,15 +2006,6 @@
             .coin-container {
                 width: 200px;
                 height: 200px;
-            }
-            
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .project-links {
-                flex-direction: column;
-                gap: 10px;
             }
             
             .education-item, .achievement-item {
@@ -1800,6 +2020,11 @@
             
             .education-item h3, .achievement-item h3 {
                 font-size: 1.1rem;
+            }
+            
+            .mobile-theme-toggle {
+                top: 85px;
+                right: 15px;
             }
         }
     </style>
@@ -1833,6 +2058,13 @@
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Theme Toggle - Only visible on mobile -->
+    <div class="mobile-theme-toggle">
+        <button class="theme-toggle" id="mobileThemeToggle">
+            <i class="fas fa-sun"></i>
+        </button>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -2019,7 +2251,7 @@ procedures. </p>
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Projects Section - Updated with Enhanced Grid and Modal -->
     <section id="projects">
         <div class="container">
             <div class="section-title">
@@ -2033,13 +2265,13 @@ procedures. </p>
                 <!-- Filter buttons will be loaded here -->
             </div>
             
-            <!-- Projects Grid -->
+            <!-- Projects Grid - Enhanced with 4 columns -->
             <div class="projects-grid" id="projects-grid">
                 <!-- Projects will be loaded here -->
             </div>
             
             <!-- See More/Less Button for Projects -->
-            <div class="see-more-container" id="projects-see-more-container" style="display: none;">
+            <div class="see-more-container" id="projects-see-more-container">
                 <button class="see-more-btn" id="projects-see-more">
                     <span>See More</span>
                     <i class="fas fa-chevron-down"></i>
@@ -2150,6 +2382,44 @@ procedures. </p>
         </div>
     </div>
 
+    <!-- Project Detail Modal -->
+    <div class="modal" id="project-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 id="modal-title">Project Title</h2>
+                <div class="project-meta">
+                    <span class="project-category" id="modal-category">Category</span>
+                    <span class="project-status" id="modal-status">Completed</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image" id="modal-image"></div>
+                <div class="modal-video" id="modal-video" style="display: none;"></div>
+                <div class="modal-description">
+                    <h3>Project Description</h3>
+                    <p id="modal-description">Project description goes here.</p>
+                </div>
+                <div class="modal-details">
+                    <div class="modal-tech">
+                        <h3>Technologies Used</h3>
+                        <div class="modal-tech-list" id="modal-tech">
+                            <!-- Technologies will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="modal-features">
+                        <h3>Key Features</h3>
+                        <ul id="modal-features">
+                            <!-- Features will be loaded here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
@@ -2196,19 +2466,30 @@ procedures. </p>
         });
 
         // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-        
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            if (document.body.classList.contains('light-mode')) {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            } else {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            const mobileThemeIcon = mobileThemeToggle.querySelector('i');
+            
+            function toggleTheme() {
+                document.body.classList.toggle('light-mode');
+                if (document.body.classList.contains('light-mode')) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    mobileThemeIcon.classList.remove('fa-sun');
+                    mobileThemeIcon.classList.add('fa-moon');
+                } else {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    mobileThemeIcon.classList.remove('fa-moon');
+                    mobileThemeIcon.classList.add('fa-sun');
+                }
             }
-        });
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            mobileThemeToggle.addEventListener('click', toggleTheme);
+        }
 
         // Mobile Menu Toggle - Fixed Implementation
         const hamburger = document.getElementById('hamburger');
@@ -2302,10 +2583,15 @@ procedures. </p>
             });
         }, observerOptions);
 
-        // Project Filtering
+        // Enhanced Project Filtering with See More/Less for each category
         function setupProjectFilters() {
             const filterBtns = document.querySelectorAll('.filter-btn');
             const projectCards = document.querySelectorAll('.project-card');
+            const projectsSeeMoreBtn = document.getElementById('projects-see-more');
+            const projectsSeeMoreContainer = document.getElementById('projects-see-more-container');
+            
+            // Track which categories are expanded
+            const expandedCategories = {};
             
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -2316,6 +2602,7 @@ procedures. </p>
                     
                     const filter = btn.getAttribute('data-filter');
                     
+                    // Show/hide projects based on filter
                     projectCards.forEach(card => {
                         if (filter === 'all' || card.getAttribute('data-category') === filter) {
                             card.style.display = 'flex';
@@ -2323,8 +2610,211 @@ procedures. </p>
                             card.style.display = 'none';
                         }
                     });
+                    
+                    // Handle See More/Less button for the current filter
+                    updateSeeMoreButton(filter, expandedCategories[filter]);
                 });
             });
+            
+            // Set up See More/Less functionality for projects
+            projectsSeeMoreBtn.addEventListener('click', function() {
+                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                const isExpanded = expandedCategories[activeFilter] || false;
+                
+                if (isExpanded) {
+                    // Show only first 16 project items for this category
+                    showLimitedProjects(activeFilter, 16);
+                    expandedCategories[activeFilter] = false;
+                    projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
+                } else {
+                    // Show all project items for this category
+                    showAllProjects(activeFilter);
+                    expandedCategories[activeFilter] = true;
+                    projectsSeeMoreBtn.innerHTML = '<span>See Less</span><i class="fas fa-chevron-up"></i>';
+                }
+            });
+            
+            // Initialize with limited projects for each category
+            initializeProjectVisibility();
+        }
+        
+        // Initialize project visibility - show only 16 projects initially
+        function initializeProjectVisibility() {
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            // Show only first 16 projects
+            projectCards.forEach((card, index) => {
+                if (index >= 16) {
+                    card.classList.add('hidden');
+                } else {
+                    card.classList.remove('hidden');
+                }
+            });
+            
+            // Check if we need to show the See More button
+            updateSeeMoreButton('all', false);
+        }
+        
+        // Show limited number of projects for a category
+        function showLimitedProjects(category, limit) {
+            const projectCards = document.querySelectorAll('.project-card');
+            let count = 0;
+            
+            projectCards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    if (count < limit) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                    count++;
+                }
+            });
+        }
+        
+        // Show all projects for a category
+        function showAllProjects(category) {
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            projectCards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.classList.remove('hidden');
+                }
+            });
+        }
+        
+        // Update See More button visibility and state
+        function updateSeeMoreButton(category, isExpanded) {
+            const projectsSeeMoreContainer = document.getElementById('projects-see-more-container');
+            const projectsSeeMoreBtn = document.getElementById('projects-see-more');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            // Count projects in the current category
+            let count = 0;
+            projectCards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    count++;
+                }
+            });
+            
+            // Show button only if there are more than 16 projects in this category
+            if (count > 16) {
+                projectsSeeMoreContainer.style.display = 'block';
+                
+                if (isExpanded) {
+                    projectsSeeMoreBtn.innerHTML = '<span>See Less</span><i class="fas fa-chevron-up"></i>';
+                } else {
+                    projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
+                }
+            } else {
+                projectsSeeMoreContainer.style.display = 'none';
+            }
+        }
+
+        // Project Modal - Enhanced to not scroll to top
+        function setupProjectModal() {
+            const modal = document.getElementById('project-modal');
+            const closeBtn = document.getElementById('modal-close');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Add event listeners to project "See More" buttons
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('project-link') && e.target.textContent.includes('See More')) {
+                    const projectCard = e.target.closest('.project-card');
+                    if (projectCard) {
+                        const projectId = projectCard.getAttribute('data-id');
+                        openProjectModal(projectId);
+                    }
+                }
+            });
+        }
+        
+        function openProjectModal(projectId) {
+            const modal = document.getElementById('project-modal');
+            const project = portfolioData.projects.find(p => p.id == projectId);
+            
+            if (!project) return;
+            
+            // Store current scroll position
+            const scrollY = window.scrollY;
+            
+            // Set modal content
+            document.getElementById('modal-title').textContent = project.title;
+            document.getElementById('modal-category').textContent = project.category;
+            document.getElementById('modal-status').textContent = project.status;
+            document.getElementById('modal-status').className = `project-status ${project.status.toLowerCase()}`;
+            document.getElementById('modal-description').textContent = project.fullDescription || project.description;
+            
+            // Set image or video
+            const modalImage = document.getElementById('modal-image');
+            const modalVideo = document.getElementById('modal-video');
+            
+            if (project.youtubeLink) {
+                modalImage.style.display = 'none';
+                modalVideo.style.display = 'block';
+                modalVideo.innerHTML = `<iframe src="https://www.youtube.com/embed/${getYouTubeId(project.youtubeLink)}" allowfullscreen></iframe>`;
+            } else {
+                modalVideo.style.display = 'none';
+                modalImage.style.display = 'block';
+                modalImage.style.backgroundImage = `url(${project.image})`;
+            }
+            
+            // Set technologies
+            const modalTech = document.getElementById('modal-tech');
+            modalTech.innerHTML = '';
+            if (project.technologies) {
+                project.technologies.forEach(tech => {
+                    const techItem = document.createElement('span');
+                    techItem.classList.add('modal-tech-item');
+                    techItem.textContent = tech;
+                    modalTech.appendChild(techItem);
+                });
+            }
+            
+            // Set features
+            const modalFeatures = document.getElementById('modal-features');
+            modalFeatures.innerHTML = '';
+            if (project.features) {
+                project.features.forEach(feature => {
+                    const featureItem = document.createElement('li');
+                    featureItem.textContent = feature;
+                    modalFeatures.appendChild(featureItem);
+                });
+            }
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Restore scroll position when modal is closed
+            const closeModal = () => {
+                window.scrollTo(0, scrollY);
+            };
+            
+            const closeBtn = document.getElementById('modal-close');
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+        
+        function getYouTubeId(url) {
+            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[7].length === 11) ? match[7] : false;
         }
 
         // AI Assistant
@@ -2493,6 +2983,9 @@ procedures. </p>
             
             // Setup animated text
             setupAnimatedText();
+            
+            // Setup theme toggle
+            setupThemeToggle();
         });
 
         // Load Portfolio Data from JSON
@@ -2508,6 +3001,7 @@ procedures. </p>
                 
                 // Setup additional functionality
                 setupProjectFilters();
+                setupProjectModal();
                 setupAIAssistant();
             } catch (error) {
                 console.error('Error loading portfolio data:', error);
@@ -2668,6 +3162,425 @@ procedures. </p>
                         links: [
                             { text: "Live Demo", url: "https://example.com/demo", icon: "fas fa-external-link-alt" }
                         ]
+                    },
+                    {
+                        id: 2,
+                        title: "Automated Production Line",
+                        description: "Designed and implemented a fully automated production line for automotive components.",
+                        fullDescription: "This project involved designing a complete automated production line from concept to implementation. The system integrated robotics, conveyor systems, and quality control mechanisms to streamline the manufacturing process. The implementation resulted in a 40% increase in production efficiency and a 25% reduction in labor costs.",
+                        category: "Automation",
+                        status: "Completed",
+                        image: "images/project2.jpg",
+                        youtubeLink: "",
+                        tags: ["Robotics", "Automation", "PLC", "Conveyor Systems"],
+                        technologies: ["Siemens PLC", "Fanuc Robotics", "SCADA", "Python"],
+                        features: [
+                            "40% increase in production efficiency",
+                            "25% reduction in labor costs",
+                            "Integrated quality control system",
+                            "Real-time production monitoring"
+                        ],
+                        icon: "fas fa-robot",
+                        links: [
+                            { text: "Case Study", url: "https://example.com/case-study", icon: "fas fa-file-alt" }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        title: "SCADA System Implementation",
+                        description: "Developed and deployed a comprehensive SCADA system for industrial monitoring.",
+                        fullDescription: "This project involved designing and implementing a SCADA (Supervisory Control and Data Acquisition) system for a large manufacturing facility. The system provided real-time monitoring of production processes, equipment status, and energy consumption. It included custom dashboards, alert systems, and historical data analysis capabilities.",
+                        category: "SCADA System",
+                        status: "Completed",
+                        image: "images/project3.jpg",
+                        youtubeLink: "",
+                        tags: ["SCADA", "HMI", "Data Acquisition", "Monitoring"],
+                        technologies: ["Ignition SCADA", "SQL Database", "Python", "JavaScript"],
+                        features: [
+                            "Real-time process monitoring",
+                            "Customizable dashboards",
+                            "Automated alert system",
+                            "Historical data analysis"
+                        ],
+                        icon: "fas fa-desktop",
+                        links: [
+                            { text: "Documentation", url: "https://example.com/docs", icon: "fas fa-book" }
+                        ]
+                    },
+                    {
+                        id: 4,
+                        title: "Control Panel Design",
+                        description: "Designed and built custom control panels for industrial applications.",
+                        fullDescription: "This project involved designing and building custom control panels for various industrial applications. The panels included PLCs, HMIs, motor controls, and safety systems. Each panel was designed to meet specific client requirements and industry standards.",
+                        category: "Control Panels",
+                        status: "Completed",
+                        image: "images/project4.jpg",
+                        youtubeLink: "",
+                        tags: ["Control Panels", "PLC", "HMI", "Electrical Design"],
+                        technologies: ["Allen-Bradley PLC", "Siemens HMI", "AutoCAD Electrical", "Eplan"],
+                        features: [
+                            "Custom design for specific applications",
+                            "Compliance with industry standards",
+                            "Integrated safety systems",
+                            "User-friendly interface"
+                        ],
+                        icon: "fas fa-sliders-h",
+                        links: [
+                            { text: "Gallery", url: "https://example.com/gallery", icon: "fas fa-images" }
+                        ]
+                    },
+                    {
+                        id: 5,
+                        title: "Industrial Robot Integration",
+                        description: "Integrated industrial robots into existing production lines.",
+                        fullDescription: "This project involved integrating industrial robots into existing production lines to automate repetitive tasks. The integration required careful planning to ensure compatibility with existing equipment and minimal disruption to production. The robots were programmed to perform tasks with high precision and efficiency.",
+                        category: "Automation",
+                        status: "Completed",
+                        image: "images/project5.jpg",
+                        youtubeLink: "",
+                        tags: ["Robotics", "Automation", "Integration", "Programming"],
+                        technologies: ["Fanuc Robotics", "KUKA", "Python", "PLC"],
+                        features: [
+                            "High precision operation",
+                            "Seamless integration with existing systems",
+                            "Reduced manual labor",
+                            "Increased production consistency"
+                        ],
+                        icon: "fas fa-industry",
+                        links: [
+                            { text: "Video Demo", url: "https://example.com/video", icon: "fas fa-video" }
+                        ]
+                    },
+                    {
+                        id: 6,
+                        title: "Energy Management System",
+                        description: "Developed an energy management system to optimize power consumption.",
+                        fullDescription: "This project involved developing an energy management system to monitor and optimize power consumption in a large industrial facility. The system collected data from various sensors and meters, analyzed energy usage patterns, and provided recommendations for efficiency improvements. Implementation resulted in a 15% reduction in energy costs.",
+                        category: "SCADA System",
+                        status: "Completed",
+                        image: "images/project6.jpg",
+                        youtubeLink: "",
+                        tags: ["Energy Management", "SCADA", "Data Analysis", "Optimization"],
+                        technologies: ["Ignition SCADA", "SQL Database", "Python", "Machine Learning"],
+                        features: [
+                            "Real-time energy monitoring",
+                            "Usage pattern analysis",
+                            "Automated efficiency recommendations",
+                            "15% reduction in energy costs"
+                        ],
+                        icon: "fas fa-bolt",
+                        links: [
+                            { text: "Case Study", url: "https://example.com/energy-case", icon: "fas fa-file-alt" }
+                        ]
+                    },
+                    {
+                        id: 7,
+                        title: "Custom HMI Development",
+                        description: "Developed custom Human-Machine Interfaces for industrial control systems.",
+                        fullDescription: "This project involved designing and developing custom Human-Machine Interfaces (HMIs) for various industrial control systems. The interfaces were tailored to specific user needs and provided intuitive control and monitoring capabilities. The development process included user research, prototyping, and iterative testing.",
+                        category: "Control Panels",
+                        status: "Completed",
+                        image: "images/project7.jpg",
+                        youtubeLink: "",
+                        tags: ["HMI", "UI/UX Design", "Control Systems", "Prototyping"],
+                        technologies: ["Siemens WinCC", "Rockwell FactoryTalk", "JavaScript", "CSS"],
+                        features: [
+                            "Intuitive user interface",
+                            "Customized for specific applications",
+                            "Real-time data visualization",
+                            "User feedback integration"
+                        ],
+                        icon: "fas fa-tv",
+                        links: [
+                            { text: "UI Samples", url: "https://example.com/ui-samples", icon: "fas fa-palette" }
+                        ]
+                    },
+                    {
+                        id: 8,
+                        title: "Predictive Maintenance System",
+                        description: "Implemented a predictive maintenance system for industrial equipment.",
+                        fullDescription: "This project involved implementing a predictive maintenance system that used sensor data and machine learning algorithms to predict equipment failures before they occurred. The system monitored vibration, temperature, and other parameters to identify early signs of wear and tear, allowing for proactive maintenance and reducing unplanned downtime.",
+                        category: "Automation",
+                        status: "Ongoing",
+                        image: "images/project8.jpg",
+                        youtubeLink: "",
+                        tags: ["Predictive Maintenance", "Machine Learning", "IoT", "Data Analysis"],
+                        technologies: ["Python", "TensorFlow", "IoT Sensors", "Cloud Platform"],
+                        features: [
+                            "Early failure detection",
+                            "Reduced unplanned downtime",
+                            "Proactive maintenance scheduling",
+                            "Machine learning algorithms"
+                        ],
+                        icon: "fas fa-tools",
+                        links: [
+                            { text: "Research Paper", url: "https://example.com/research", icon: "fas fa-graduation-cap" }
+                        ]
+                    },
+                    {
+                        id: 9,
+                        title: "Industrial Network Infrastructure",
+                        description: "Designed and implemented a robust industrial network infrastructure.",
+                        fullDescription: "This project involved designing and implementing a robust industrial network infrastructure to support various automation systems. The network included wired and wireless components, security measures, and redundancy to ensure reliable operation. The infrastructure supported data exchange between PLCs, HMIs, SCADA systems, and other industrial devices.",
+                        category: "SCADA System",
+                        status: "Completed",
+                        image: "images/project9.jpg",
+                        youtubeLink: "",
+                        tags: ["Networking", "Industrial Ethernet", "Cybersecurity", "Infrastructure"],
+                        technologies: ["Cisco Switches", "Firewalls", "VPN", "Network Monitoring"],
+                        features: [
+                            "Robust and reliable infrastructure",
+                            "Enhanced cybersecurity measures",
+                            "Network redundancy",
+                            "Scalable design"
+                        ],
+                        icon: "fas fa-network-wired",
+                        links: [
+                            { text: "Network Diagram", url: "https://example.com/network", icon: "fas fa-project-diagram" }
+                        ]
+                    },
+                    {
+                        id: 10,
+                        title: "Custom Control Software",
+                        description: "Developed custom control software for specialized industrial applications.",
+                        fullDescription: "This project involved developing custom control software for specialized industrial applications that required unique functionality not available in off-the-shelf solutions. The software was designed to interface with various hardware components and provide precise control over complex processes. The development included requirements analysis, software design, implementation, and testing.",
+                        category: "Control Panels",
+                        status: "Completed",
+                        image: "images/project10.jpg",
+                        youtubeLink: "",
+                        tags: ["Software Development", "Custom Solutions", "Control Systems", "Testing"],
+                        technologies: ["C#", ".NET", "SQL Server", "REST API"],
+                        features: [
+                            "Custom functionality for specific needs",
+                            "Hardware integration",
+                            "User-friendly interface",
+                            "Comprehensive testing"
+                        ],
+                        icon: "fas fa-code",
+                        links: [
+                            { text: "GitHub", url: "https://github.com/example", icon: "fab fa-github" }
+                        ]
+                    },
+                    {
+                        id: 11,
+                        title: "Industrial Safety System",
+                        description: "Designed and implemented a comprehensive industrial safety system.",
+                        fullDescription: "This project involved designing and implementing a comprehensive industrial safety system to protect workers and equipment. The system included emergency stop circuits, safety relays, light curtains, and other safety devices. The design followed industry standards and regulations to ensure maximum safety.",
+                        category: "Control Panels",
+                        status: "Completed",
+                        image: "images/project11.jpg",
+                        youtubeLink: "",
+                        tags: ["Safety Systems", "Emergency Stop", "Safety Relays", "Compliance"],
+                        technologies: ["Safety PLCs", "Safety Relays", "Light Curtains", "Risk Assessment"],
+                        features: [
+                            "Comprehensive safety coverage",
+                            "Compliance with industry standards",
+                            "Emergency stop functionality",
+                            "Risk assessment integration"
+                        ],
+                        icon: "fas fa-shield-alt",
+                        links: [
+                            { text: "Safety Report", url: "https://example.com/safety", icon: "fas fa-file-contract" }
+                        ]
+                    },
+                    {
+                        id: 12,
+                        title: "Data Analytics Platform",
+                        description: "Developed a data analytics platform for industrial data.",
+                        fullDescription: "This project involved developing a data analytics platform to process and analyze large volumes of industrial data. The platform collected data from various sources, performed statistical analysis, and provided insights to improve operational efficiency. The system included data visualization tools and reporting capabilities.",
+                        category: "SCADA System",
+                        status: "Ongoing",
+                        image: "images/project12.jpg",
+                        youtubeLink: "",
+                        tags: ["Data Analytics", "Big Data", "Visualization", "Reporting"],
+                        technologies: ["Python", "Pandas", "Tableau", "Apache Spark"],
+                        features: [
+                            "Large-scale data processing",
+                            "Statistical analysis",
+                            "Interactive visualization",
+                            "Automated reporting"
+                        ],
+                        icon: "fas fa-chart-bar",
+                        links: [
+                            { text: "Demo Dashboard", url: "https://example.com/dashboard", icon: "fas fa-tachometer-alt" }
+                        ]
+                    },
+                    {
+                        id: 13,
+                        title: "Mobile Control Application",
+                        description: "Developed a mobile application for remote monitoring and control.",
+                        fullDescription: "This project involved developing a mobile application that allowed users to monitor and control industrial processes remotely. The app provided real-time data, alerts, and control capabilities through a secure connection. The development included both iOS and Android versions with responsive design for various screen sizes.",
+                        category: "Automation",
+                        status: "Completed",
+                        image: "images/project13.jpg",
+                        youtubeLink: "",
+                        tags: ["Mobile App", "Remote Monitoring", "iOS", "Android"],
+                        technologies: ["React Native", "Node.js", "REST API", "Push Notifications"],
+                        features: [
+                            "Remote monitoring and control",
+                            "Real-time alerts",
+                            "Secure connection",
+                            "Cross-platform compatibility"
+                        ],
+                        icon: "fas fa-mobile-alt",
+                        links: [
+                            { text: "App Store", url: "https://apps.apple.com/app/example", icon: "fab fa-app-store" },
+                            { text: "Play Store", url: "https://play.google.com/store/apps/example", icon: "fab fa-google-play" }
+                        ]
+                    },
+                    {
+                        id: 14,
+                        title: "Industrial IoT Platform",
+                        description: "Developed an IoT platform for industrial device connectivity.",
+                        fullDescription: "This project involved developing an IoT platform to connect and manage industrial devices. The platform provided device management, data collection, and remote configuration capabilities. It supported various communication protocols and provided a scalable architecture for future expansion.",
+                        category: "SCADA System",
+                        status: "Ongoing",
+                        image: "images/project14.jpg",
+                        youtubeLink: "",
+                        tags: ["IoT", "Device Management", "Cloud Platform", "Scalability"],
+                        technologies: ["AWS IoT", "MQTT", "Node.js", "Docker"],
+                        features: [
+                            "Device connectivity and management",
+                            "Data collection and storage",
+                            "Remote configuration",
+                            "Scalable architecture"
+                        ],
+                        icon: "fas fa-cloud",
+                        links: [
+                            { text: "Platform Demo", url: "https://example.com/iot-demo", icon: "fas fa-laptop" }
+                        ]
+                    },
+                    {
+                        id: 15,
+                        title: "Automated Quality Control",
+                        description: "Implemented an automated quality control system using vision systems.",
+                        fullDescription: "This project involved implementing an automated quality control system that used vision systems to inspect products for defects. The system captured images of products, analyzed them using computer vision algorithms, and identified defects with high accuracy. Defective products were automatically rejected from the production line.",
+                        category: "Automation",
+                        status: "Completed",
+                        image: "images/project15.jpg",
+                        youtubeLink: "",
+                        tags: ["Quality Control", "Computer Vision", "Automation", "Inspection"],
+                        technologies: ["Cognex Vision Systems", "Python", "OpenCV", "PLC Integration"],
+                        features: [
+                            "High-accuracy defect detection",
+                            "Automated rejection system",
+                            "Real-time inspection",
+                            "Statistical quality reporting"
+                        ],
+                        icon: "fas fa-search",
+                        links: [
+                            { text: "Quality Report", url: "https://example.com/quality", icon: "fas fa-chart-line" }
+                        ]
+                    },
+                    {
+                        id: 16,
+                        title: "Energy-Efficient Motor Control",
+                        description: "Designed energy-efficient motor control systems for industrial applications.",
+                        fullDescription: "This project involved designing energy-efficient motor control systems for various industrial applications. The systems used variable frequency drives (VFDs) to optimize motor speed based on load requirements, resulting in significant energy savings. The design included proper sizing, selection, and configuration of VFDs for different applications.",
+                        category: "Control Panels",
+                        status: "Completed",
+                        image: "images/project16.jpg",
+                        youtubeLink: "",
+                        tags: ["Motor Control", "VFD", "Energy Efficiency", "Power Electronics"],
+                        technologies: ["ABB Drives", "Siemens Drives", "Power Monitoring", "Energy Analysis"],
+                        features: [
+                            "Significant energy savings",
+                            "Optimized motor performance",
+                            "Extended equipment life",
+                            "Power monitoring capabilities"
+                        ],
+                        icon: "fas fa-cog",
+                        links: [
+                            { text: "Energy Analysis", url: "https://example.com/energy-analysis", icon: "fas fa-chart-pie" }
+                        ]
+                    },
+                    {
+                        id: 17,
+                        title: "Industrial Cybersecurity",
+                        description: "Implemented cybersecurity measures for industrial control systems.",
+                        fullDescription: "This project involved implementing comprehensive cybersecurity measures for industrial control systems to protect against cyber threats. The measures included network segmentation, firewall configuration, access control, and security monitoring. The implementation followed industry best practices and compliance requirements.",
+                        category: "SCADA System",
+                        status: "Completed",
+                        image: "images/project17.jpg",
+                        youtubeLink: "",
+                        tags: ["Cybersecurity", "Network Security", "Access Control", "Compliance"],
+                        technologies: ["Firewalls", "VPN", "SIEM", "Security Policies"],
+                        features: [
+                            "Comprehensive security measures",
+                            "Network segmentation",
+                            "Access control implementation",
+                            "Security monitoring"
+                        ],
+                        icon: "fas fa-lock",
+                        links: [
+                            { text: "Security Whitepaper", url: "https://example.com/security", icon: "fas fa-file-shield" }
+                        ]
+                    },
+                    {
+                        id: 18,
+                        title: "Custom Sensor Integration",
+                        description: "Integrated custom sensors for specialized measurement applications.",
+                        fullDescription: "This project involved integrating custom sensors for specialized measurement applications in industrial environments. The sensors were selected or designed to meet specific measurement requirements and integrated with existing control systems. The integration included signal conditioning, calibration, and data processing.",
+                        category: "Automation",
+                        status: "Completed",
+                        image: "images/project18.jpg",
+                        youtubeLink: "",
+                        tags: ["Sensors", "Measurement", "Integration", "Calibration"],
+                        technologies: ["Custom Sensors", "Signal Conditioning", "Data Acquisition", "Calibration Tools"],
+                        features: [
+                            "Specialized measurement capabilities",
+                            "Accurate and reliable data",
+                            "Seamless integration",
+                            "Custom calibration"
+                        ],
+                        icon: "fas fa-ruler",
+                        links: [
+                            { text: "Technical Specs", url: "https://example.com/specs", icon: "fas fa-file-invoice" }
+                        ]
+                    },
+                    {
+                        id: 19,
+                        title: "Batch Process Automation",
+                        description: "Automated batch processes in chemical manufacturing.",
+                        fullDescription: "This project involved automating batch processes in a chemical manufacturing facility. The automation included recipe management, sequential control, and batch reporting. The system improved consistency, reduced human error, and increased throughput.",
+                        category: "Automation",
+                        status: "Completed",
+                        image: "images/project19.jpg",
+                        youtubeLink: "",
+                        tags: ["Batch Processing", "Recipe Management", "Sequential Control", "Chemical Industry"],
+                        technologies: ["Batch PLC", "Recipe Management", "SCADA", "Reporting"],
+                        features: [
+                            "Improved process consistency",
+                            "Reduced human error",
+                            "Increased throughput",
+                            "Comprehensive batch reporting"
+                        ],
+                        icon: "fas fa-flask",
+                        links: [
+                            { text: "Process Flow", url: "https://example.com/process", icon: "fas fa-project-diagram" }
+                        ]
+                    },
+                    {
+                        id: 20,
+                        title: "Remote Diagnostics System",
+                        description: "Developed a remote diagnostics system for equipment maintenance.",
+                        fullDescription: "This project involved developing a remote diagnostics system that allowed technicians to diagnose equipment issues remotely. The system collected diagnostic data, provided analysis tools, and facilitated remote troubleshooting. This reduced the need for on-site visits and improved maintenance efficiency.",
+                        category: "SCADA System",
+                        status: "Ongoing",
+                        image: "images/project20.jpg",
+                        youtubeLink: "",
+                        tags: ["Remote Diagnostics", "Maintenance", "Troubleshooting", "Data Analysis"],
+                        technologies: ["Remote Access", "Diagnostic Tools", "Data Analysis", "Communication Protocols"],
+                        features: [
+                            "Remote equipment diagnosis",
+                            "Reduced on-site visits",
+                            "Improved maintenance efficiency",
+                            "Comprehensive diagnostic tools"
+                        ],
+                        icon: "fas fa-stethoscope",
+                        links: [
+                            { text: "Diagnostic Portal", url: "https://example.com/diagnostics", icon: "fas fa-tools" }
+                        ]
                     }
                 ],
                 contact: {
@@ -2702,6 +3615,7 @@ procedures. </p>
             
             // Setup additional functionality
             setupProjectFilters();
+            setupProjectModal();
             setupAIAssistant();
         }
 
@@ -3082,49 +3996,16 @@ procedures. </p>
                 });
             }
             
-            // Projects with See More/Less functionality
+            // Projects with Enhanced Grid and Modal functionality
             const projectsGrid = document.getElementById('projects-grid');
             const projectsSeeMoreContainer = document.getElementById('projects-see-more-container');
             const projectsSeeMoreBtn = document.getElementById('projects-see-more');
-            
-            // Check if we have more than 12 project items
-            if (data.projects && data.projects.length > 12) {
-                projectsSeeMoreContainer.style.display = 'block';
-            }
-            
-            let showAllProjects = false;
-            
-            // Set up See More/Less functionality for projects
-            projectsSeeMoreBtn.addEventListener('click', function() {
-                showAllProjects = !showAllProjects;
-                
-                if (showAllProjects) {
-                    // Show all project items
-                    document.querySelectorAll('.project-card').forEach(item => {
-                        item.classList.remove('hidden');
-                    });
-                    projectsSeeMoreBtn.innerHTML = '<span>See Less</span><i class="fas fa-chevron-up"></i>';
-                } else {
-                    // Show only first 12 project items
-                    document.querySelectorAll('.project-card').forEach((item, index) => {
-                        if (index >= 12) {
-                            item.classList.add('hidden');
-                        }
-                    });
-                    projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
-                }
-            });
             
             if (data.projects) {
                 data.projects.forEach((project, index) => {
                     // Create project card for grid
                     const card = document.createElement('div');
                     card.classList.add('project-card');
-                    
-                    // Hide items beyond the first 12 initially
-                    if (index >= 12) {
-                        card.classList.add('hidden');
-                    }
                     
                     card.setAttribute('data-category', project.category);
                     card.setAttribute('data-id', project.id);
@@ -3143,7 +4024,7 @@ procedures. </p>
                         });
                     }
                     
-                    // Add "See More" button
+                    // Add "See More" button for modal
                     linksHTML += `<a href="#" class="project-link see-more-btn"><i class="fas fa-eye"></i> See More</a>`;
                     
                     card.innerHTML = `
