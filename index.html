@@ -2590,8 +2590,9 @@ procedures. </p>
             const projectsSeeMoreBtn = document.getElementById('projects-see-more');
             const projectsSeeMoreContainer = document.getElementById('projects-see-more-container');
             
-            // Track which categories are expanded
-            const expandedCategories = {};
+            // Track current filter and expanded state
+            let currentFilter = 'all';
+            let isExpanded = false;
             
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -2600,11 +2601,15 @@ procedures. </p>
                     // Add active class to clicked button
                     btn.classList.add('active');
                     
-                    const filter = btn.getAttribute('data-filter');
+                    currentFilter = btn.getAttribute('data-filter');
+                    
+                    // Reset expanded state when changing filter
+                    isExpanded = false;
+                    projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
                     
                     // Show/hide projects based on filter
                     projectCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        if (currentFilter === 'all' || card.getAttribute('data-category') === currentFilter) {
                             card.style.display = 'flex';
                         } else {
                             card.style.display = 'none';
@@ -2612,25 +2617,22 @@ procedures. </p>
                     });
                     
                     // Handle See More/Less button for the current filter
-                    updateSeeMoreButton(filter, expandedCategories[filter]);
+                    updateProjectVisibility(currentFilter, isExpanded);
                 });
             });
             
             // Set up See More/Less functionality for projects
             projectsSeeMoreBtn.addEventListener('click', function() {
-                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
-                const isExpanded = expandedCategories[activeFilter] || false;
+                isExpanded = !isExpanded;
                 
                 if (isExpanded) {
-                    // Show only first 16 project items for this category
-                    showLimitedProjects(activeFilter, 16);
-                    expandedCategories[activeFilter] = false;
-                    projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
-                } else {
                     // Show all project items for this category
-                    showAllProjects(activeFilter);
-                    expandedCategories[activeFilter] = true;
+                    showAllProjects(currentFilter);
                     projectsSeeMoreBtn.innerHTML = '<span>See Less</span><i class="fas fa-chevron-up"></i>';
+                } else {
+                    // Show only first 16 project items for this category
+                    showLimitedProjects(currentFilter, 16);
+                    projectsSeeMoreBtn.innerHTML = '<span>See More</span><i class="fas fa-chevron-down"></i>';
                 }
             });
             
@@ -2681,6 +2683,16 @@ procedures. </p>
                     card.classList.remove('hidden');
                 }
             });
+        }
+        
+        // Update project visibility based on filter and expanded state
+        function updateProjectVisibility(category, expanded) {
+            if (expanded) {
+                showAllProjects(category);
+            } else {
+                showLimitedProjects(category, 16);
+            }
+            updateSeeMoreButton(category, expanded);
         }
         
         // Update See More button visibility and state
