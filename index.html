@@ -72,7 +72,7 @@
             color: var(--text);
             transition: var(--transition);
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         h1, h2, h3, h4, h5 {
@@ -410,6 +410,7 @@
             line-height: 1.1;
             position: relative;
             display: inline-block;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .hero h1::after {
@@ -437,6 +438,7 @@
             min-height: 60px;
             display: flex;
             align-items: center;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .animated-text {
@@ -464,6 +466,7 @@
             margin-bottom: 30px;
             max-width: 600px;
             color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .btn {
@@ -925,25 +928,248 @@
             100% { background-position: 10px 0; }
         }
 
-        /* Education & Achievements Section - Enhanced for Mobile */
+        /* ENHANCED Education & Achievements Section */
         .edu-achievements {
             background: linear-gradient(135deg, var(--light) 0%, var(--card-bg) 100%);
             padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .edu-achievements::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.03"><polygon fill="white" points="0,1000 1000,0 1000,1000"/></svg>');
+            background-size: cover;
+            z-index: 0;
+        }
+
+        .edu-achievements .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow);
+            position: relative;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--card-bg);
+            top: 30px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 0 4px var(--accent), 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: -10px;
+            background-color: var(--card-bg);
+            top: 30px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 0 4px var(--accent), 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 30px;
+            background-color: var(--accent);
+            right: -30px;
+            top: 40px;
+            z-index: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 30px;
+            background-color: var(--accent);
+            left: -30px;
+            top: 40px;
+            z-index: 0;
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            line-height: 1.3;
+        }
+
+        .timeline-content .institution {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .timeline-content p {
+            color: var(--text);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            top: 20px;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-icon {
+            right: -75px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-icon {
+            left: -75px;
+        }
+
+        /* Enhanced Tabs for Education & Achievements */
+        .tabs-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .tabs-scroll-btn {
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            background: var(--card-bg);
+            border: none;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+            transition: var(--transition);
+        }
+
+        .tabs-scroll-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tabs-scroll-btn.left {
+            left: 0;
+            border-radius: 50px 0 0 50px;
+        }
+
+        .tabs-scroll-btn.right {
+            right: 0;
+            border-radius: 0 50px 50px 0;
+        }
+
+        .tabs-wrapper {
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0 10px;
+        }
+
+        .tabs-wrapper::-webkit-scrollbar {
+            display: none;
         }
 
         .tabs {
             display: flex;
             justify-content: center;
             margin-bottom: 40px;
-            flex-wrap: wrap;
             background: var(--card-bg);
             border-radius: 50px;
             padding: 5px;
             box-shadow: 0 5px 15px var(--shadow);
-            max-width: 800px;
+            max-width: 100%;
             margin-left: auto;
             margin-right: auto;
-            overflow-x: auto;
+            min-width: min-content;
+            scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -951,7 +1177,7 @@
             padding: 12px 25px;
             background: none;
             border: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--text);
             cursor: pointer;
@@ -975,57 +1201,6 @@
 
         .tab-content.active {
             display: block;
-        }
-
-        .education-item, .achievement-item {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 30px var(--shadow);
-            transition: var(--transition);
-            border-left: 4px solid var(--primary);
-            display: flex;
-            align-items: flex-start;
-        }
-
-        .education-item:hover, .achievement-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px var(--shadow);
-        }
-
-        .edu-icon, .achievement-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            color: white;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .edu-content, .achievement-content {
-            flex: 1;
-        }
-
-        .education-item h3, .achievement-item h3 {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .education-date, .achievement-date {
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(245, 158, 11, 0.1);
-            border-radius: 20px;
         }
 
         /* Publication Link Styles */
@@ -1053,7 +1228,7 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
 
-        /* Projects Section - Updated with Enhanced Grid and Modal */
+        /* Projects Section */
         .projects-container {
             position: relative;
             overflow: hidden;
@@ -1803,10 +1978,68 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
+        /* FIX FOR PUBLICATION OVERLAP ISSUE */
+        #publications-tab .achievement-item {
+            min-height: 280px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        #publications-tab .achievement-item .achievement-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        #publications-tab .achievement-item .achievement-content p {
+            flex-grow: 1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+        
+        #publications-tab .achievement-item.expanded .achievement-content p {
+            -webkit-line-clamp: unset;
+            overflow: visible;
+        }
+        
+        #publications-tab .achievement-item .publication-link {
+            margin-top: auto;
+            align-self: flex-start;
+        }
+        
+        #publications-tab .achievement-item .read-more-toggle {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        #publications-tab .achievement-item .read-more-toggle i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        #publications-tab .achievement-item.expanded .read-more-toggle i {
+            transform: rotate(180deg);
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .projects-grid {
                 grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .education-grid, .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
@@ -1877,10 +2110,15 @@
                 text-align: center;
             }
             
+            .edu-header, .achievement-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
             .edu-icon, .achievement-icon {
                 margin-right: 0;
                 margin-bottom: 15px;
-                align-self: center;
             }
             
             .modal-details {
@@ -1889,6 +2127,56 @@
             
             .projects-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .education-grid, .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs-scroll-btn {
+                display: flex;
+            }
+            
+            /* Fix for publications on tablet */
+            #publications-tab .achievement-item {
+                min-height: auto;
+            }
+            
+            #publications-tab .achievement-item .achievement-content p {
+                -webkit-line-clamp: 6;
+            }
+
+            /* Timeline adjustments for tablet */
+            .timeline-container::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: -55px;
+                right: auto;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -30px;
+                right: auto;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-icon,
+            .timeline-item:nth-child(even) .timeline-icon {
+                left: 10px;
+                right: auto;
             }
         }
 
@@ -1987,6 +2275,10 @@
                 grid-template-columns: 1fr;
             }
             
+            .tabs-scroll-btn {
+                display: none;
+            }
+            
             /* Mobile Theme Toggle - Show on mobile */
             .mobile-theme-toggle {
                 display: block;
@@ -1994,6 +2286,16 @@
             
             /* Hide theme toggle in nav on mobile */
             .nav-links .theme-toggle {
+                display: none;
+            }
+            
+            /* Fix for publications on mobile */
+            #publications-tab .achievement-item .achievement-content p {
+                -webkit-line-clamp: unset;
+                overflow: visible;
+            }
+            
+            #publications-tab .achievement-item .read-more-toggle {
                 display: none;
             }
         }
@@ -2025,6 +2327,15 @@
             .mobile-theme-toggle {
                 top: 85px;
                 right: 15px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -2101,6 +2412,9 @@ procedures. </p>
                         <a href="https://web.facebook.com/isuru.g.dasanayake" target="_blank" class="hero-social-link">
                             <i class="fab fa-facebook"></i>
                         </a>
+                        <a href="https://www.tiktok.com/@techisuru?_r=1&_t=ZS-91WI1pkv8rY" target="_blank" class="hero-social-link">
+                            <i class="fab fa-tiktok"></i>
+                        </a>    
                     </div>
                 </div>
                 <div class="hero-image">
@@ -2190,68 +2504,79 @@ procedures. </p>
         </div>
     </section>
 
-    <!-- Education & Achievements Section -->
+    <!-- Education & Achievements Section - ENHANCED DESIGN -->
     <section id="education" class="edu-achievements">
         <div class="container">
             <div class="section-title">
                 <h2>Education & Achievements</h2>
                 <p>Academic background and professional accomplishments</p>
             </div>
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="education-tab">Education</button>
-                <button class="tab-btn" data-tab="publications-tab">Publications</button>
-                <button class="tab-btn" data-tab="awards-tab">Honors & Awards</button>
-                <button class="tab-btn" data-tab="qualifications-tab">Qualifications</button>
-                <button class="tab-btn" data-tab="research-tab">Research Activities</button>
-                <button class="tab-btn" data-tab="activities-tab">Activities & Associations</button>
-                <button class="tab-btn" data-tab="extracurricular-tab">Extracurricular</button>
+            
+            <div class="tabs-container">
+                <button class="tabs-scroll-btn left" id="scrollLeft">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="tabs-wrapper">
+                    <div class="tabs" id="tabs">
+                        <button class="tab-btn active" data-tab="education-tab">Education</button>
+                        <button class="tab-btn" data-tab="publications-tab">Publications</button>
+                        <button class="tab-btn" data-tab="awards-tab">Honors & Awards</button>
+                        <button class="tab-btn" data-tab="qualifications-tab">Qualifications</button>
+                        <button class="tab-btn" data-tab="research-tab">Research Activities</button>
+                        <button class="tab-btn" data-tab="activities-tab">Activities & Associations</button>
+                        <button class="tab-btn" data-tab="extracurricular-tab">Extracurricular</button>
+                    </div>
+                </div>
+                <button class="tabs-scroll-btn right" id="scrollRight">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
             
             <div class="tab-content active" id="education-tab">
-                <div id="education-content">
-                    <!-- Education items will be loaded here -->
+                <div class="timeline-container" id="education-content">
+                    <!-- Education items will be loaded here as timeline items -->
                 </div>
             </div>
             
             <div class="tab-content" id="publications-tab">
-                <div id="publications-content">
-                    <!-- Publications will be loaded here -->
+                <div class="timeline-container" id="publications-content">
+                    <!-- Publications will be loaded here as timeline items -->
                 </div>
             </div>
             
             <div class="tab-content" id="awards-tab">
-                <div id="awards-content">
-                    <!-- Awards will be loaded here -->
+                <div class="timeline-container" id="awards-content">
+                    <!-- Awards will be loaded here as timeline items -->
                 </div>
             </div>
             
             <div class="tab-content" id="qualifications-tab">
-                <div id="qualifications-content">
-                    <!-- Qualifications will be loaded here -->
+                <div class="timeline-container" id="qualifications-content">
+                    <!-- Qualifications will be loaded here as timeline items -->
                 </div>
             </div>
             
             <div class="tab-content" id="research-tab">
-                <div id="research-content">
-                    <!-- Research activities will be loaded here -->
+                <div class="timeline-container" id="research-content">
+                    <!-- Research activities will be loaded here as timeline items -->
                 </div>
             </div>
             
             <div class="tab-content" id="activities-tab">
-                <div id="activities-content">
-                    <!-- Activities & associations will be loaded here -->
+                <div class="timeline-container" id="activities-content">
+                    <!-- Activities & associations will be loaded here as timeline items -->
                 </div>
             </div>
             
             <div class="tab-content" id="extracurricular-tab">
-                <div id="extracurricular-content">
-                    <!-- Extracurricular activities will be loaded here -->
+                <div class="timeline-container" id="extracurricular-content">
+                    <!-- Extracurricular activities will be loaded here as timeline items -->
                 </div>
             </div>
         </div>
     </section>
 
-        <!-- Projects Section - Updated with Enhanced Grid and Modal -->
+    <!-- Projects Section - Updated with Enhanced Grid and Modal -->
     <section id="projects">
         <div class="container">
             <div class="section-title">
@@ -2516,9 +2841,12 @@ procedures. </p>
             });
         });
 
-        // Tab Switching
+        // Enhanced Tab Switching with Scroll Controls
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
+        const tabsContainer = document.getElementById('tabs');
+        const scrollLeftBtn = document.getElementById('scrollLeft');
+        const scrollRightBtn = document.getElementById('scrollRight');
         
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -2533,6 +2861,36 @@ procedures. </p>
                 document.getElementById(tabId).classList.add('active');
             });
         });
+
+        // Tab scrolling functionality
+        if (scrollLeftBtn && scrollRightBtn) {
+            scrollLeftBtn.addEventListener('click', () => {
+                tabsContainer.scrollBy({
+                    left: -200,
+                    behavior: 'smooth'
+                });
+            });
+            
+            scrollRightBtn.addEventListener('click', () => {
+                tabsContainer.scrollBy({
+                    left: 200,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Show/hide scroll buttons based on scroll position
+            tabsContainer.addEventListener('scroll', () => {
+                const scrollLeft = tabsContainer.scrollLeft;
+                const scrollWidth = tabsContainer.scrollWidth;
+                const clientWidth = tabsContainer.clientWidth;
+                
+                scrollLeftBtn.style.display = scrollLeft > 0 ? 'flex' : 'none';
+                scrollRightBtn.style.display = scrollLeft < (scrollWidth - clientWidth - 10) ? 'flex' : 'none';
+            });
+            
+            // Initial check
+            tabsContainer.dispatchEvent(new Event('scroll'));
+        }
 
         // Create Floating Elements
         const floatingElements = document.getElementById('floatingElements');
@@ -2996,7 +3354,7 @@ procedures. </p>
 
         // Observe elements for animation
         document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.experience-item, .project-card');
+            const animatedElements = document.querySelectorAll('.experience-item, .project-card, .timeline-item');
             animatedElements.forEach(el => observer.observe(el));
             
             // Set current year in footer
@@ -3027,11 +3385,31 @@ procedures. </p>
                 setupProjectFilters();
                 setupProjectModal();
                 setupAIAssistant();
+                
+                // Setup publication read more functionality
+                setupPublicationReadMore();
             } catch (error) {
                 console.error('Error loading portfolio data:', error);
                 // Load default data if JSON file is not available
                 loadDefaultData();
             }
+        }
+
+        // Setup publication read more functionality
+        function setupPublicationReadMore() {
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('read-more-toggle')) {
+                    const publicationItem = e.target.closest('.achievement-item');
+                    publicationItem.classList.toggle('expanded');
+                    
+                    const icon = e.target.querySelector('i');
+                    if (publicationItem.classList.contains('expanded')) {
+                        e.target.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
+                    } else {
+                        e.target.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+                    }
+                }
+            });
         }
 
         // Load default data if JSON is not available
@@ -3116,11 +3494,25 @@ procedures. </p>
                 ],
                 publications: [
                     {
-                        title: "Advanced Composite Materials in Modern Aerospace Design",
-                        publisher: "Journal of Aerospace Engineering",
-                        date: "2021",
-                        description: "Co-authored research paper exploring the application of novel composite materials in reducing aircraft weight while maintaining structural integrity.",
-                        link: "https://doi.org/10.1234/jae.2021.001"
+                        title: "Surface EMG signals based Torque Prediction",
+                        publisher: "IEEE Transactions on Information Systems, 2013",
+                        date: "2013",
+                        description: "Research on using surface EMG signals for predicting torque in prosthetic applications. This publication explores innovative approaches to biomechanical signal processing.",
+                        link: "#"
+                    },
+                    {
+                        title: "Estimation of Prosthetic Arm Stump Arm Kinematics",
+                        publisher: "ICIAFS, 2014",
+                        date: "2014",
+                        description: "Study on kinematic estimation for prosthetic arms, focusing on improving control and usability for amputees through advanced signal processing techniques.",
+                        link: "#"
+                    },
+                    {
+                        title: "Fuzzy integrated PID Controller for Industrial Automation",
+                        publisher: "ICIAFS, 2014",
+                        date: "2014",
+                        description: "Development of a fuzzy logic integrated PID controller for enhanced industrial automation systems. This research combines traditional control methods with artificial intelligence for improved performance.",
+                        link: "#"
                     }
                 ],
                 awards: [
@@ -3186,425 +3578,6 @@ procedures. </p>
                         links: [
                             { text: "Live Demo", url: "https://example.com/demo", icon: "fas fa-external-link-alt" }
                         ]
-                    },
-                    {
-                        id: 2,
-                        title: "Automated Production Line",
-                        description: "Designed and implemented a fully automated production line for automotive components.",
-                        fullDescription: "This project involved designing a complete automated production line from concept to implementation. The system integrated robotics, conveyor systems, and quality control mechanisms to streamline the manufacturing process. The implementation resulted in a 40% increase in production efficiency and a 25% reduction in labor costs.",
-                        category: "Automation",
-                        status: "Completed",
-                        image: "images/project2.jpg",
-                        youtubeLink: "",
-                        tags: ["Robotics", "Automation", "PLC", "Conveyor Systems"],
-                        technologies: ["Siemens PLC", "Fanuc Robotics", "SCADA", "Python"],
-                        features: [
-                            "40% increase in production efficiency",
-                            "25% reduction in labor costs",
-                            "Integrated quality control system",
-                            "Real-time production monitoring"
-                        ],
-                        icon: "fas fa-robot",
-                        links: [
-                            { text: "Case Study", url: "https://example.com/case-study", icon: "fas fa-file-alt" }
-                        ]
-                    },
-                    {
-                        id: 3,
-                        title: "SCADA System Implementation",
-                        description: "Developed and deployed a comprehensive SCADA system for industrial monitoring.",
-                        fullDescription: "This project involved designing and implementing a SCADA (Supervisory Control and Data Acquisition) system for a large manufacturing facility. The system provided real-time monitoring of production processes, equipment status, and energy consumption. It included custom dashboards, alert systems, and historical data analysis capabilities.",
-                        category: "SCADA System",
-                        status: "Completed",
-                        image: "images/project3.jpg",
-                        youtubeLink: "",
-                        tags: ["SCADA", "HMI", "Data Acquisition", "Monitoring"],
-                        technologies: ["Ignition SCADA", "SQL Database", "Python", "JavaScript"],
-                        features: [
-                            "Real-time process monitoring",
-                            "Customizable dashboards",
-                            "Automated alert system",
-                            "Historical data analysis"
-                        ],
-                        icon: "fas fa-desktop",
-                        links: [
-                            { text: "Documentation", url: "https://example.com/docs", icon: "fas fa-book" }
-                        ]
-                    },
-                    {
-                        id: 4,
-                        title: "Control Panel Design",
-                        description: "Designed and built custom control panels for industrial applications.",
-                        fullDescription: "This project involved designing and building custom control panels for various industrial applications. The panels included PLCs, HMIs, motor controls, and safety systems. Each panel was designed to meet specific client requirements and industry standards.",
-                        category: "Control Panels",
-                        status: "Completed",
-                        image: "images/project4.jpg",
-                        youtubeLink: "",
-                        tags: ["Control Panels", "PLC", "HMI", "Electrical Design"],
-                        technologies: ["Allen-Bradley PLC", "Siemens HMI", "AutoCAD Electrical", "Eplan"],
-                        features: [
-                            "Custom design for specific applications",
-                            "Compliance with industry standards",
-                            "Integrated safety systems",
-                            "User-friendly interface"
-                        ],
-                        icon: "fas fa-sliders-h",
-                        links: [
-                            { text: "Gallery", url: "https://example.com/gallery", icon: "fas fa-images" }
-                        ]
-                    },
-                    {
-                        id: 5,
-                        title: "Industrial Robot Integration",
-                        description: "Integrated industrial robots into existing production lines.",
-                        fullDescription: "This project involved integrating industrial robots into existing production lines to automate repetitive tasks. The integration required careful planning to ensure compatibility with existing equipment and minimal disruption to production. The robots were programmed to perform tasks with high precision and efficiency.",
-                        category: "Automation",
-                        status: "Completed",
-                        image: "images/project5.jpg",
-                        youtubeLink: "",
-                        tags: ["Robotics", "Automation", "Integration", "Programming"],
-                        technologies: ["Fanuc Robotics", "KUKA", "Python", "PLC"],
-                        features: [
-                            "High precision operation",
-                            "Seamless integration with existing systems",
-                            "Reduced manual labor",
-                            "Increased production consistency"
-                        ],
-                        icon: "fas fa-industry",
-                        links: [
-                            { text: "Video Demo", url: "https://example.com/video", icon: "fas fa-video" }
-                        ]
-                    },
-                    {
-                        id: 6,
-                        title: "Energy Management System",
-                        description: "Developed an energy management system to optimize power consumption.",
-                        fullDescription: "This project involved developing an energy management system to monitor and optimize power consumption in a large industrial facility. The system collected data from various sensors and meters, analyzed energy usage patterns, and provided recommendations for efficiency improvements. Implementation resulted in a 15% reduction in energy costs.",
-                        category: "SCADA System",
-                        status: "Completed",
-                        image: "images/project6.jpg",
-                        youtubeLink: "",
-                        tags: ["Energy Management", "SCADA", "Data Analysis", "Optimization"],
-                        technologies: ["Ignition SCADA", "SQL Database", "Python", "Machine Learning"],
-                        features: [
-                            "Real-time energy monitoring",
-                            "Usage pattern analysis",
-                            "Automated efficiency recommendations",
-                            "15% reduction in energy costs"
-                        ],
-                        icon: "fas fa-bolt",
-                        links: [
-                            { text: "Case Study", url: "https://example.com/energy-case", icon: "fas fa-file-alt" }
-                        ]
-                    },
-                    {
-                        id: 7,
-                        title: "Custom HMI Development",
-                        description: "Developed custom Human-Machine Interfaces for industrial control systems.",
-                        fullDescription: "This project involved designing and developing custom Human-Machine Interfaces (HMIs) for various industrial control systems. The interfaces were tailored to specific user needs and provided intuitive control and monitoring capabilities. The development process included user research, prototyping, and iterative testing.",
-                        category: "Control Panels",
-                        status: "Completed",
-                        image: "images/project7.jpg",
-                        youtubeLink: "",
-                        tags: ["HMI", "UI/UX Design", "Control Systems", "Prototyping"],
-                        technologies: ["Siemens WinCC", "Rockwell FactoryTalk", "JavaScript", "CSS"],
-                        features: [
-                            "Intuitive user interface",
-                            "Customized for specific applications",
-                            "Real-time data visualization",
-                            "User feedback integration"
-                        ],
-                        icon: "fas fa-tv",
-                        links: [
-                            { text: "UI Samples", url: "https://example.com/ui-samples", icon: "fas fa-palette" }
-                        ]
-                    },
-                    {
-                        id: 8,
-                        title: "Predictive Maintenance System",
-                        description: "Implemented a predictive maintenance system for industrial equipment.",
-                        fullDescription: "This project involved implementing a predictive maintenance system that used sensor data and machine learning algorithms to predict equipment failures before they occurred. The system monitored vibration, temperature, and other parameters to identify early signs of wear and tear, allowing for proactive maintenance and reducing unplanned downtime.",
-                        category: "Automation",
-                        status: "Ongoing",
-                        image: "images/project8.jpg",
-                        youtubeLink: "",
-                        tags: ["Predictive Maintenance", "Machine Learning", "IoT", "Data Analysis"],
-                        technologies: ["Python", "TensorFlow", "IoT Sensors", "Cloud Platform"],
-                        features: [
-                            "Early failure detection",
-                            "Reduced unplanned downtime",
-                            "Proactive maintenance scheduling",
-                            "Machine learning algorithms"
-                        ],
-                        icon: "fas fa-tools",
-                        links: [
-                            { text: "Research Paper", url: "https://example.com/research", icon: "fas fa-graduation-cap" }
-                        ]
-                    },
-                    {
-                        id: 9,
-                        title: "Industrial Network Infrastructure",
-                        description: "Designed and implemented a robust industrial network infrastructure.",
-                        fullDescription: "This project involved designing and implementing a robust industrial network infrastructure to support various automation systems. The network included wired and wireless components, security measures, and redundancy to ensure reliable operation. The infrastructure supported data exchange between PLCs, HMIs, SCADA systems, and other industrial devices.",
-                        category: "SCADA System",
-                        status: "Completed",
-                        image: "images/project9.jpg",
-                        youtubeLink: "",
-                        tags: ["Networking", "Industrial Ethernet", "Cybersecurity", "Infrastructure"],
-                        technologies: ["Cisco Switches", "Firewalls", "VPN", "Network Monitoring"],
-                        features: [
-                            "Robust and reliable infrastructure",
-                            "Enhanced cybersecurity measures",
-                            "Network redundancy",
-                            "Scalable design"
-                        ],
-                        icon: "fas fa-network-wired",
-                        links: [
-                            { text: "Network Diagram", url: "https://example.com/network", icon: "fas fa-project-diagram" }
-                        ]
-                    },
-                    {
-                        id: 10,
-                        title: "Custom Control Software",
-                        description: "Developed custom control software for specialized industrial applications.",
-                        fullDescription: "This project involved developing custom control software for specialized industrial applications that required unique functionality not available in off-the-shelf solutions. The software was designed to interface with various hardware components and provide precise control over complex processes. The development included requirements analysis, software design, implementation, and testing.",
-                        category: "Control Panels",
-                        status: "Completed",
-                        image: "images/project10.jpg",
-                        youtubeLink: "",
-                        tags: ["Software Development", "Custom Solutions", "Control Systems", "Testing"],
-                        technologies: ["C#", ".NET", "SQL Server", "REST API"],
-                        features: [
-                            "Custom functionality for specific needs",
-                            "Hardware integration",
-                            "User-friendly interface",
-                            "Comprehensive testing"
-                        ],
-                        icon: "fas fa-code",
-                        links: [
-                            { text: "GitHub", url: "https://github.com/example", icon: "fab fa-github" }
-                        ]
-                    },
-                    {
-                        id: 11,
-                        title: "Industrial Safety System",
-                        description: "Designed and implemented a comprehensive industrial safety system.",
-                        fullDescription: "This project involved designing and implementing a comprehensive industrial safety system to protect workers and equipment. The system included emergency stop circuits, safety relays, light curtains, and other safety devices. The design followed industry standards and regulations to ensure maximum safety.",
-                        category: "Control Panels",
-                        status: "Completed",
-                        image: "images/project11.jpg",
-                        youtubeLink: "",
-                        tags: ["Safety Systems", "Emergency Stop", "Safety Relays", "Compliance"],
-                        technologies: ["Safety PLCs", "Safety Relays", "Light Curtains", "Risk Assessment"],
-                        features: [
-                            "Comprehensive safety coverage",
-                            "Compliance with industry standards",
-                            "Emergency stop functionality",
-                            "Risk assessment integration"
-                        ],
-                        icon: "fas fa-shield-alt",
-                        links: [
-                            { text: "Safety Report", url: "https://example.com/safety", icon: "fas fa-file-contract" }
-                        ]
-                    },
-                    {
-                        id: 12,
-                        title: "Data Analytics Platform",
-                        description: "Developed a data analytics platform for industrial data.",
-                        fullDescription: "This project involved developing a data analytics platform to process and analyze large volumes of industrial data. The platform collected data from various sources, performed statistical analysis, and provided insights to improve operational efficiency. The system included data visualization tools and reporting capabilities.",
-                        category: "SCADA System",
-                        status: "Ongoing",
-                        image: "images/project12.jpg",
-                        youtubeLink: "",
-                        tags: ["Data Analytics", "Big Data", "Visualization", "Reporting"],
-                        technologies: ["Python", "Pandas", "Tableau", "Apache Spark"],
-                        features: [
-                            "Large-scale data processing",
-                            "Statistical analysis",
-                            "Interactive visualization",
-                            "Automated reporting"
-                        ],
-                        icon: "fas fa-chart-bar",
-                        links: [
-                            { text: "Demo Dashboard", url: "https://example.com/dashboard", icon: "fas fa-tachometer-alt" }
-                        ]
-                    },
-                    {
-                        id: 13,
-                        title: "Mobile Control Application",
-                        description: "Developed a mobile application for remote monitoring and control.",
-                        fullDescription: "This project involved developing a mobile application that allowed users to monitor and control industrial processes remotely. The app provided real-time data, alerts, and control capabilities through a secure connection. The development included both iOS and Android versions with responsive design for various screen sizes.",
-                        category: "Automation",
-                        status: "Completed",
-                        image: "images/project13.jpg",
-                        youtubeLink: "",
-                        tags: ["Mobile App", "Remote Monitoring", "iOS", "Android"],
-                        technologies: ["React Native", "Node.js", "REST API", "Push Notifications"],
-                        features: [
-                            "Remote monitoring and control",
-                            "Real-time alerts",
-                            "Secure connection",
-                            "Cross-platform compatibility"
-                        ],
-                        icon: "fas fa-mobile-alt",
-                        links: [
-                            { text: "App Store", url: "https://apps.apple.com/app/example", icon: "fab fa-app-store" },
-                            { text: "Play Store", url: "https://play.google.com/store/apps/example", icon: "fab fa-google-play" }
-                        ]
-                    },
-                    {
-                        id: 14,
-                        title: "Industrial IoT Platform",
-                        description: "Developed an IoT platform for industrial device connectivity.",
-                        fullDescription: "This project involved developing an IoT platform to connect and manage industrial devices. The platform provided device management, data collection, and remote configuration capabilities. It supported various communication protocols and provided a scalable architecture for future expansion.",
-                        category: "SCADA System",
-                        status: "Ongoing",
-                        image: "images/project14.jpg",
-                        youtubeLink: "",
-                        tags: ["IoT", "Device Management", "Cloud Platform", "Scalability"],
-                        technologies: ["AWS IoT", "MQTT", "Node.js", "Docker"],
-                        features: [
-                            "Device connectivity and management",
-                            "Data collection and storage",
-                            "Remote configuration",
-                            "Scalable architecture"
-                        ],
-                        icon: "fas fa-cloud",
-                        links: [
-                            { text: "Platform Demo", url: "https://example.com/iot-demo", icon: "fas fa-laptop" }
-                        ]
-                    },
-                    {
-                        id: 15,
-                        title: "Automated Quality Control",
-                        description: "Implemented an automated quality control system using vision systems.",
-                        fullDescription: "This project involved implementing an automated quality control system that used vision systems to inspect products for defects. The system captured images of products, analyzed them using computer vision algorithms, and identified defects with high accuracy. Defective products were automatically rejected from the production line.",
-                        category: "Automation",
-                        status: "Completed",
-                        image: "images/project15.jpg",
-                        youtubeLink: "",
-                        tags: ["Quality Control", "Computer Vision", "Automation", "Inspection"],
-                        technologies: ["Cognex Vision Systems", "Python", "OpenCV", "PLC Integration"],
-                        features: [
-                            "High-accuracy defect detection",
-                            "Automated rejection system",
-                            "Real-time inspection",
-                            "Statistical quality reporting"
-                        ],
-                        icon: "fas fa-search",
-                        links: [
-                            { text: "Quality Report", url: "https://example.com/quality", icon: "fas fa-chart-line" }
-                        ]
-                    },
-                    {
-                        id: 16,
-                        title: "Energy-Efficient Motor Control",
-                        description: "Designed energy-efficient motor control systems for industrial applications.",
-                        fullDescription: "This project involved designing energy-efficient motor control systems for various industrial applications. The systems used variable frequency drives (VFDs) to optimize motor speed based on load requirements, resulting in significant energy savings. The design included proper sizing, selection, and configuration of VFDs for different applications.",
-                        category: "Control Panels",
-                        status: "Completed",
-                        image: "images/project16.jpg",
-                        youtubeLink: "",
-                        tags: ["Motor Control", "VFD", "Energy Efficiency", "Power Electronics"],
-                        technologies: ["ABB Drives", "Siemens Drives", "Power Monitoring", "Energy Analysis"],
-                        features: [
-                            "Significant energy savings",
-                            "Optimized motor performance",
-                            "Extended equipment life",
-                            "Power monitoring capabilities"
-                        ],
-                        icon: "fas fa-cog",
-                        links: [
-                            { text: "Energy Analysis", url: "https://example.com/energy-analysis", icon: "fas fa-chart-pie" }
-                        ]
-                    },
-                    {
-                        id: 17,
-                        title: "Industrial Cybersecurity",
-                        description: "Implemented cybersecurity measures for industrial control systems.",
-                        fullDescription: "This project involved implementing comprehensive cybersecurity measures for industrial control systems to protect against cyber threats. The measures included network segmentation, firewall configuration, access control, and security monitoring. The implementation followed industry best practices and compliance requirements.",
-                        category: "SCADA System",
-                        status: "Completed",
-                        image: "images/project17.jpg",
-                        youtubeLink: "",
-                        tags: ["Cybersecurity", "Network Security", "Access Control", "Compliance"],
-                        technologies: ["Firewalls", "VPN", "SIEM", "Security Policies"],
-                        features: [
-                            "Comprehensive security measures",
-                            "Network segmentation",
-                            "Access control implementation",
-                            "Security monitoring"
-                        ],
-                        icon: "fas fa-lock",
-                        links: [
-                            { text: "Security Whitepaper", url: "https://example.com/security", icon: "fas fa-file-shield" }
-                        ]
-                    },
-                    {
-                        id: 18,
-                        title: "Custom Sensor Integration",
-                        description: "Integrated custom sensors for specialized measurement applications.",
-                        fullDescription: "This project involved integrating custom sensors for specialized measurement applications in industrial environments. The sensors were selected or designed to meet specific measurement requirements and integrated with existing control systems. The integration included signal conditioning, calibration, and data processing.",
-                        category: "Automation",
-                        status: "Completed",
-                        image: "images/project18.jpg",
-                        youtubeLink: "",
-                        tags: ["Sensors", "Measurement", "Integration", "Calibration"],
-                        technologies: ["Custom Sensors", "Signal Conditioning", "Data Acquisition", "Calibration Tools"],
-                        features: [
-                            "Specialized measurement capabilities",
-                            "Accurate and reliable data",
-                            "Seamless integration",
-                            "Custom calibration"
-                        ],
-                        icon: "fas fa-ruler",
-                        links: [
-                            { text: "Technical Specs", url: "https://example.com/specs", icon: "fas fa-file-invoice" }
-                        ]
-                    },
-                    {
-                        id: 19,
-                        title: "Batch Process Automation",
-                        description: "Automated batch processes in chemical manufacturing.",
-                        fullDescription: "This project involved automating batch processes in a chemical manufacturing facility. The automation included recipe management, sequential control, and batch reporting. The system improved consistency, reduced human error, and increased throughput.",
-                        category: "Automation",
-                        status: "Completed",
-                        image: "images/project19.jpg",
-                        youtubeLink: "",
-                        tags: ["Batch Processing", "Recipe Management", "Sequential Control", "Chemical Industry"],
-                        technologies: ["Batch PLC", "Recipe Management", "SCADA", "Reporting"],
-                        features: [
-                            "Improved process consistency",
-                            "Reduced human error",
-                            "Increased throughput",
-                            "Comprehensive batch reporting"
-                        ],
-                        icon: "fas fa-flask",
-                        links: [
-                            { text: "Process Flow", url: "https://example.com/process", icon: "fas fa-project-diagram" }
-                        ]
-                    },
-                    {
-                        id: 20,
-                        title: "Remote Diagnostics System",
-                        description: "Developed a remote diagnostics system for equipment maintenance.",
-                        fullDescription: "This project involved developing a remote diagnostics system that allowed technicians to diagnose equipment issues remotely. The system collected diagnostic data, provided analysis tools, and facilitated remote troubleshooting. This reduced the need for on-site visits and improved maintenance efficiency.",
-                        category: "SCADA System",
-                        status: "Ongoing",
-                        image: "images/project20.jpg",
-                        youtubeLink: "",
-                        tags: ["Remote Diagnostics", "Maintenance", "Troubleshooting", "Data Analysis"],
-                        technologies: ["Remote Access", "Diagnostic Tools", "Data Analysis", "Communication Protocols"],
-                        features: [
-                            "Remote equipment diagnosis",
-                            "Reduced on-site visits",
-                            "Improved maintenance efficiency",
-                            "Comprehensive diagnostic tools"
-                        ],
-                        icon: "fas fa-stethoscope",
-                        links: [
-                            { text: "Diagnostic Portal", url: "https://example.com/diagnostics", icon: "fas fa-tools" }
-                        ]
                     }
                 ],
                 contact: {
@@ -3641,6 +3614,7 @@ procedures. </p>
             setupProjectFilters();
             setupProjectModal();
             setupAIAssistant();
+            setupPublicationReadMore();
         }
 
         // Populate Portfolio with Data
@@ -3834,21 +3808,23 @@ procedures. </p>
                 });
             }
             
-            // Education
+            // Education - ENHANCED TIMELINE DESIGN
             const educationContent = document.getElementById('education-content');
             if (data.education) {
-                data.education.forEach(edu => {
+                data.education.forEach((edu, index) => {
                     const item = document.createElement('div');
-                    item.classList.add('education-item');
+                    item.classList.add('timeline-item');
+                    
+                    const iconClass = index % 2 === 0 ? 'fas fa-graduation-cap' : 'fas fa-university';
                     
                     item.innerHTML = `
-                        <div class="edu-icon">
-                            <i class="fas fa-graduation-cap"></i>
+                        <div class="timeline-icon">
+                            <i class="${iconClass}"></i>
                         </div>
-                        <div class="edu-content">
+                        <div class="timeline-content">
+                            <div class="timeline-date">${edu.date}</div>
                             <h3>${edu.degree}</h3>
-                            <div class="education-date">${edu.date}</div>
-                            <p><strong>${edu.institution}</strong></p>
+                            <p class="institution">${edu.institution}</p>
                             <p>${edu.description}</p>
                         </div>
                     `;
@@ -3857,12 +3833,14 @@ procedures. </p>
                 });
             }
             
-            // Publications
+            // Publications - ENHANCED TIMELINE DESIGN
             const publicationsContent = document.getElementById('publications-content');
             if (data.publications) {
-                data.publications.forEach(pub => {
+                data.publications.forEach((pub, index) => {
                     const item = document.createElement('div');
-                    item.classList.add('achievement-item');
+                    item.classList.add('timeline-item');
+                    
+                    const iconClass = index % 2 === 0 ? 'fas fa-book' : 'fas fa-file-alt';
                     
                     // Add publication link if available
                     let linkHTML = '';
@@ -3875,13 +3853,13 @@ procedures. </p>
                     }
                     
                     item.innerHTML = `
-                        <div class="achievement-icon">
-                            <i class="fas fa-book"></i>
+                        <div class="timeline-icon">
+                            <i class="${iconClass}"></i>
                         </div>
-                        <div class="achievement-content">
+                        <div class="timeline-content">
+                            <div class="timeline-date">${pub.date}</div>
                             <h3>${pub.title}</h3>
-                            <div class="achievement-date">${pub.date}</div>
-                            <p><strong>${pub.publisher}</strong></p>
+                            <p class="institution">${pub.publisher}</p>
                             <p>${pub.description}</p>
                             ${linkHTML}
                         </div>
@@ -3891,21 +3869,23 @@ procedures. </p>
                 });
             }
             
-            // Awards
+            // Awards - ENHANCED TIMELINE DESIGN
             const awardsContent = document.getElementById('awards-content');
             if (data.awards) {
-                data.awards.forEach(award => {
+                data.awards.forEach((award, index) => {
                     const item = document.createElement('div');
-                    item.classList.add('achievement-item');
+                    item.classList.add('timeline-item');
+                    
+                    const iconClass = index % 2 === 0 ? 'fas fa-trophy' : 'fas fa-award';
                     
                     item.innerHTML = `
-                        <div class="achievement-icon">
-                            <i class="fas fa-trophy"></i>
+                        <div class="timeline-icon">
+                            <i class="${iconClass}"></i>
                         </div>
-                        <div class="achievement-content">
+                        <div class="timeline-content">
+                            <div class="timeline-date">${award.date}</div>
                             <h3>${award.title}</h3>
-                            <div class="achievement-date">${award.date}</div>
-                            <p><strong>${award.organization}</strong></p>
+                            <p class="institution">${award.organization}</p>
                             <p>${award.description}</p>
                         </div>
                     `;
@@ -3914,21 +3894,23 @@ procedures. </p>
                 });
             }
             
-            // Qualifications
+            // Qualifications - ENHANCED TIMELINE DESIGN
             const qualificationsContent = document.getElementById('qualifications-content');
             if (data.qualifications) {
-                data.qualifications.forEach(qual => {
+                data.qualifications.forEach((qual, index) => {
                     const item = document.createElement('div');
-                    item.classList.add('achievement-item');
+                    item.classList.add('timeline-item');
+                    
+                    const iconClass = index % 2 === 0 ? 'fas fa-certificate' : 'fas fa-id-card';
                     
                     item.innerHTML = `
-                        <div class="achievement-icon">
-                            <i class="fas fa-certificate"></i>
+                        <div class="timeline-icon">
+                            <i class="${iconClass}"></i>
                         </div>
-                        <div class="achievement-content">
+                        <div class="timeline-content">
+                            <div class="timeline-date">${qual.date}</div>
                             <h3>${qual.title}</h3>
-                            <div class="achievement-date">${qual.date}</div>
-                            <p><strong>${qual.issuer}</strong></p>
+                            <p class="institution">${qual.issuer}</p>
                             <p>${qual.description}</p>
                         </div>
                     `;
@@ -3937,21 +3919,23 @@ procedures. </p>
                 });
             }
             
-            // Research Activities
+            // Research Activities - ENHANCED TIMELINE DESIGN
             const researchContent = document.getElementById('research-content');
             if (data.researchActivities) {
-                data.researchActivities.forEach(research => {
+                data.researchActivities.forEach((research, index) => {
                     const item = document.createElement('div');
-                    item.classList.add('achievement-item');
+                    item.classList.add('timeline-item');
+                    
+                    const iconClass = index % 2 === 0 ? 'fas fa-flask' : 'fas fa-microscope';
                     
                     item.innerHTML = `
-                        <div class="achievement-icon">
-                            <i class="fas fa-flask"></i>
+                        <div class="timeline-icon">
+                            <i class="${iconClass}"></i>
                         </div>
-                        <div class="achievement-content">
+                        <div class="timeline-content">
+                            <div class="timeline-date">${research.date}</div>
                             <h3>${research.title}</h3>
-                            <div class="achievement-date">${research.date}</div>
-                            <p><strong>${research.institution}</strong></p>
+                            <p class="institution">${research.institution}</p>
                             <p>${research.description}</p>
                         </div>
                     `;
@@ -3960,21 +3944,23 @@ procedures. </p>
                 });
             }
             
-            // Activities & Associations
+            // Activities & Associations - ENHANCED TIMELINE DESIGN
             const activitiesContent = document.getElementById('activities-content');
             if (data.activitiesAssociations) {
-                data.activitiesAssociations.forEach(activity => {
+                data.activitiesAssociations.forEach((activity, index) => {
                     const item = document.createElement('div');
-                    item.classList.add('achievement-item');
+                    item.classList.add('timeline-item');
+                    
+                    const iconClass = index % 2 === 0 ? 'fas fa-users' : 'fas fa-handshake';
                     
                     item.innerHTML = `
-                        <div class="achievement-icon">
-                            <i class="fas fa-users"></i>
+                        <div class="timeline-icon">
+                            <i class="${iconClass}"></i>
                         </div>
-                        <div class="achievement-content">
+                        <div class="timeline-content">
+                            <div class="timeline-date">${activity.date}</div>
                             <h3>${activity.title}</h3>
-                            <div class="achievement-date">${activity.date}</div>
-                            <p><strong>${activity.organization}</strong></p>
+                            <p class="institution">${activity.organization}</p>
                             <p>${activity.description}</p>
                         </div>
                     `;
@@ -3983,21 +3969,23 @@ procedures. </p>
                 });
             }
             
-            // Extracurricular
+            // Extracurricular - ENHANCED TIMELINE DESIGN
             const extracurricularContent = document.getElementById('extracurricular-content');
             if (data.extracurricular) {
-                data.extracurricular.forEach(extra => {
+                data.extracurricular.forEach((extra, index) => {
                     const item = document.createElement('div');
-                    item.classList.add('achievement-item');
+                    item.classList.add('timeline-item');
+                    
+                    const iconClass = index % 2 === 0 ? 'fas fa-running' : 'fas fa-heart';
                     
                     item.innerHTML = `
-                        <div class="achievement-icon">
-                            <i class="fas fa-running"></i>
+                        <div class="timeline-icon">
+                            <i class="${iconClass}"></i>
                         </div>
-                        <div class="achievement-content">
+                        <div class="timeline-content">
+                            <div class="timeline-date">${extra.date}</div>
                             <h3>${extra.title}</h3>
-                            <div class="achievement-date">${extra.date}</div>
-                            <p><strong>${extra.organization}</strong></p>
+                            <p class="institution">${extra.organization}</p>
                             <p>${extra.description}</p>
                         </div>
                     `;
@@ -4109,7 +4097,7 @@ procedures. </p>
             }, 500);
             
             // Observe newly added elements
-            const newAnimatedElements = document.querySelectorAll('.experience-item, .project-card');
+            const newAnimatedElements = document.querySelectorAll('.experience-item, .project-card, .timeline-item');
             newAnimatedElements.forEach(el => observer.observe(el));
         }
 
